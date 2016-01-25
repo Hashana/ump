@@ -84,6 +84,7 @@ var playState = {
 
     // Add score text
   	scoreText = game.add.text(16, 16, 'Score: ' + score, {fontSize: '32px', fill:'#fff'});
+    scoreText.fixedToCamera = true;
 
 
 },
