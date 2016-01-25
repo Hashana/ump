@@ -9,11 +9,14 @@ var fires;
 var explosion;
 var timeCheck;
 var timer;
+var door;
+var doorIsOpen;
 
 
 var level1State = {
   create: function() {
     score = 0;
+    doorIsOpen = false;
   	// enable physics
     game.physics.startSystem(Phaser.Physics.Arcade);
 
@@ -22,9 +25,6 @@ var level1State = {
     // set background colour
     game.stage.backgroundColor = 0xbada55;
 
-
-    //set up timer
-    timer = game.time.create(3000, false);
 
   	// add platforms
   	platforms = game.add.group();
@@ -43,6 +43,12 @@ var level1State = {
   	ledge = platforms.create(-150, 250, 'ground');
   	ledge.body.immovable = true;
 
+    //Add door for win condition
+    door = game.add.sprite(1800, game.world.height - 150, 'door');
+    game.physics.arcade.enable(door);
+    door.body.immovable = true;
+    door.animations.add('open', [0,1,2,3], 1, true);
+
     //add player
   	player = game.add.sprite(400, game.world.height - 150, 'dude');
   	game.physics.arcade.enable(player);
@@ -52,6 +58,8 @@ var level1State = {
     player.animations.add('left', [0,1,2,3], 10, true);
   	player.animations.add('right', [5,6,7,8], 10, true);
     player.game.camera.follow;
+
+
 
     // Add controls for the game
   	cursors = game.input.keyboard.createCursorKeys();
@@ -82,7 +90,8 @@ var level1State = {
   		var fire = fires.create(i * 250,0,'fire');
   		//Add gravity
   		fire.body.gravity.y = 40;
-  		//Give diamond a random bounce value
+
+  		//Give fires a bounce value
   		fire.body.bounce.y = 0.7;
   	}
 
@@ -135,9 +144,11 @@ var level1State = {
   	 // check for overlap of player and diamond - calls collectdDiamond function if found
   	 game.physics.arcade.overlap(player, diamonds, this.collectDiamond, null, this);
 
-
      // Player explosion upon death
     game.physics.arcade.overlap(player, fires, this.explosion, null, this);
+
+    // Player opens door
+    game.physics.arcade.overlap(player, door, this.openDoor, null, this);
 
     // Update Camera
     if (cursors.up.isDown)
@@ -190,6 +201,15 @@ explosion: function(player){
 
 endGame: function(){
   this.game.state.start('gameOver');
+},
+
+openDoor: function(){
+  if(doorIsOpen == false)
+  {
+    door.animations.play('open', 30, false);
+    doorIsOpen = true;
+  }
+
 }
 
 };
