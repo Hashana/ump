@@ -7,7 +7,7 @@ var winState = {
       // Defining variables
       var score_style = { font: 'bold 60px VT323', fill: '#ffffff'};
   var text_style= { font: 'bold 100px VT323', fill: '#ff0000'};
-  var x = 300, y = 400;
+  var x = 400, y = 400;
 
 
   // Adding a text centered on the screen
@@ -25,6 +25,6 @@ var winState = {
 
   // Show menu screen
   start: function() {
-      this.game.state.start('play');
+      this.game.state.start('menu');
   }
 };

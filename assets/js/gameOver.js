@@ -22,7 +22,7 @@ var gameOverState = {
 
 // Start the actual game
 start: function() {
-    this.game.state.start('play');
+    this.game.state.start('menu');
 }
 
 };

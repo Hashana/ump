@@ -11,8 +11,7 @@ var menuState = {
    // Defining variables
     var instruction_style = { font: 'bold 60px VT323', fill: '#1a8cff'};
 		var title_style = { font: 'bold 100px VT323', fill: '#ffff66'};
-
-     var x = game.world.width/2, y = game.world.height/2;
+    var x = 400, y = 300;
 
      // Adding title text centered on the screen
     var text = this.game.add.text(x, y-100, "Prototype", title_style);
