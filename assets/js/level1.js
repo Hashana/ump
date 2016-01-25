@@ -17,9 +17,11 @@ var level1State = {
   	// enable physics
     game.physics.startSystem(Phaser.Physics.Arcade);
 
-    // set background sprite
-    game.stage.backgroundColour = '#2d2d2d';
     game.world.setBounds(0, 0, 2000, 600);
+
+    // set background colour
+    game.stage.backgroundColor = 0xbada55;
+
 
     //set up timer
     timer = game.time.create(3000, false);
@@ -28,10 +30,11 @@ var level1State = {
   	platforms = game.add.group();
   	// enable physics for group
   	platforms.enableBody = true;
+
   	// create the ground
   	var ground = platforms.create(0, game.world.height - 64, 'ground');
   	// fit the width of the game
-  	ground.scale.setTo(2,2);
+  	ground.scale.setTo(100,2);
   	// stop it from moving when colliding with the player
   	ground.body.immovable = true;
 
@@ -48,6 +51,7 @@ var level1State = {
   	player.body.collideWorldBounds = true;
     player.animations.add('left', [0,1,2,3], 10, true);
   	player.animations.add('right', [5,6,7,8], 10, true);
+    player.game.camera.follow;
 
     // Add controls for the game
   	cursors = game.input.keyboard.createCursorKeys();
@@ -60,7 +64,7 @@ var level1State = {
   	for (var i = 0; i < 12; i++)
   	{
   		//create a diamond in the diamonds group
-  		var diamond = diamonds.create(i * 150,0,'diamond');
+  		var diamond = diamonds.create(i * 150,0,'diamond')
   		//Add gravity
   		diamond.body.gravity.y = 60;
   		//Give diamond a random bounce value
@@ -135,23 +139,23 @@ var level1State = {
      // Player explosion upon death
     game.physics.arcade.overlap(player, fires, this.explosion, null, this);
 
-     // Update Camera
-     if (cursors.up.isDown)
+    // Update Camera
+    if (cursors.up.isDown)
     {
-        game.camera.y -= 2;
+       game.camera.y -= 3;
     }
     else if (cursors.down.isDown)
     {
-        game.camera.y += 2;
+       game.camera.y += 3;
     }
 
     if (cursors.left.isDown)
     {
-        game.camera.x -= 2;
+       game.camera.x -= 3;
     }
     else if (cursors.right.isDown)
     {
-        game.camera.x += 2;
+       game.camera.x += 3;
     }
 
   },

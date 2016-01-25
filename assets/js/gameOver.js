@@ -2,12 +2,15 @@ var gameOverState = {
 
  create: function () {
 
+   // set background colour
+   game.stage.backgroundColor = 0x90C3D4;
+
  // Call the 're-start' function when pressing the spacebar
  var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
  space_key.onDown.add(this.start, this);
 
  // Defining variables
-  var instruction_style = { font: 'bold 60px VT323', fill: '#22C122'};
+  var instruction_style = { font: 'bold 60px VT323', fill: '#ffffff'};
 	var title_style = { font: 'bold 100px VT323', fill: '#ff0000'};
   var x = 400, y = 300;;
 
