@@ -191,7 +191,7 @@ explosion: function(player){
   explosion.animations.add ('explode',[0,1,2,3], 10 ,true);
   explosion.animations.play("explode", 30, false);
   this.combustionDeath();
-
+  // code delay then uncomment line below!
 //  this.endGame();
 
 },
@@ -207,6 +207,9 @@ openDoor: function(){
   {
     door.animations.play('open', 30, false);
     doorIsOpen = true;
+  }
+  else {
+  this.displayHelp();
   }
 },
 
@@ -233,8 +236,7 @@ completeLevel: function(){
 
   // Display tips to user
 displayHelp: function(){
-
-    // Add Help text
+    // Help text for player
     var instructions = 'Collect 5 diamonds to open door'
     var helpText_style = { font: 'bold 32px Acme', fill: '#fff'};
     helpText = game.add.text(200, 100, instructions, helpText_style);
