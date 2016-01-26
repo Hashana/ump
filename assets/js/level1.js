@@ -48,6 +48,7 @@ var level1State = {
     game.physics.arcade.enable(door);
     door.body.immovable = true;
     door.animations.add('open', [0,1,2,3], 1, true);
+    //door.animations.add('close', [3,2,1,0], 1, true);
 
     //add player
   	player = game.add.sprite(400, game.world.height - 150, 'dude');
@@ -116,12 +117,14 @@ var level1State = {
   		 //Move to the left
   		 player.body.velocity.x = -150;
   		 player.animations.play('left');
+       game.camera.x -= 3;
   	 }
   	 else if(cursors.right.isDown)
   	 {
   		  // Move right
   			player.body.velocity.x = 150;
   			player.animations.play('right');
+        game.camera.x += 3;
   	 }
   	 else
   	 {
@@ -134,7 +137,14 @@ var level1State = {
   		if(cursors.up.isDown && player.body.touching.down)
   		{
   			player.body.velocity.y = -350;
+        game.camera.y -= 3;
   		}
+      // Deal with camera for down movement
+     if (cursors.down.isDown)
+     {
+        game.camera.y += 3;
+     }
+
 
      //stop diamonds falling through the ground
   	 game.physics.arcade.collide(diamonds, platforms);
@@ -150,24 +160,9 @@ var level1State = {
     // Player opens door
     game.physics.arcade.overlap(player, door, this.openDoor, null, this);
 
-    // Update Camera
-    if (cursors.up.isDown)
-    {
-       game.camera.y -= 3;
-    }
-    else if (cursors.down.isDown)
-    {
-       game.camera.y += 3;
-    }
+    //Player goes through door.
+    game.physics.arcade.overlap(player, door, this.completeLevel,null, this);
 
-    if (cursors.left.isDown)
-    {
-       game.camera.x -= 3;
-    }
-    else if (cursors.right.isDown)
-    {
-       game.camera.x += 3;
-    }
 
   },
 
@@ -199,17 +194,29 @@ explosion: function(player){
 
 },
 
+// If player loses game
 endGame: function(){
   this.game.state.start('gameOver');
 },
 
+// Player opens door
 openDoor: function(){
   if(doorIsOpen == false)
   {
     door.animations.play('open', 30, false);
     doorIsOpen = true;
   }
+},
 
+// Player goes through door if its open
+completeLevel: function(){
+  if(doorIsOpen == true)
+  {
+    if(cursors.up.isDown)
+    {
+      this.game.state.start('win');
+    }
+  }
 }
 
 };
