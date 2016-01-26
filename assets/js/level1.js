@@ -190,9 +190,9 @@ explosion: function(player){
   explosion.anchor.setTo(0.5,0.5);
   explosion.animations.add ('explode',[0,1,2,3], 10 ,true);
   explosion.animations.play("explode", 30, false);
-  explosion.animations.play("explode", 30, false);
-  explosion.animations.play("explode", 30, false);
-  this.endGame();
+  this.combustionDeath();
+
+//  this.endGame();
 
 },
 
@@ -208,6 +208,15 @@ openDoor: function(){
     door.animations.play('open', 30, false);
     doorIsOpen = true;
   }
+},
+
+//Player dies to combustionDeath
+combustionDeath: function(){
+  var deathInfo = 'When you touched the flame, the \n potassium in your body expoloded'
+  var deathInfoText_style = { font: 'bold 32px Acme', fill: '#fff'};
+  helpText = game.add.text(200, 100, deathInfo, deathInfoText_style);
+  deathInfo.fixedToCamera = true
+  game.add.tween(helpText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
 },
 
 // Player goes through door if its open
@@ -230,7 +239,6 @@ displayHelp: function(){
     var helpText_style = { font: 'bold 32px Acme', fill: '#fff'};
     helpText = game.add.text(200, 100, instructions, helpText_style);
     helpText.fixedToCamera = true
-    helpDisplayed = true;
     game.add.tween(helpText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
 
 }
