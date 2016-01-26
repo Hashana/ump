@@ -60,7 +60,7 @@ var level1State = {
   	player.body.collideWorldBounds = true;
     player.animations.add('left', [0,1,2,3], 10, true);
   	player.animations.add('right', [5,6,7,8], 10, true);
-    player.game.camera.follow;
+    game.camera.follow(player);
 
 
 
@@ -123,15 +123,13 @@ var level1State = {
   		 //Move to the left
   		 player.body.velocity.x = -150;
   		 player.animations.play('left');
-       game.camera.x -= 3;
-  	 }
+     }
   	 else if(cursors.right.isDown)
   	 {
   		  // Move right
   			player.body.velocity.x = 150;
   			player.animations.play('right');
-        game.camera.x += 3;
-  	 }
+      }
   	 else
   	 {
   			//Stand still
@@ -143,14 +141,7 @@ var level1State = {
   		if(cursors.up.isDown && player.body.touching.down)
   		{
   			player.body.velocity.y = -350;
-        game.camera.y -= 3;
   		}
-      // Deal with camera for down movement
-     if (cursors.down.isDown)
-     {
-        game.camera.y += 3;
-     }
-
 
      //stop diamonds falling through the ground
   	 game.physics.arcade.collide(diamonds, platforms);
