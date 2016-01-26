@@ -11,12 +11,14 @@ var timeCheck;
 var timer;
 var door;
 var doorIsOpen;
-
+var HelpKeyQ;
+var helpText;
 
 var level1State = {
   create: function() {
     score = 0;
     doorIsOpen = false;
+
   	// enable physics
     game.physics.startSystem(Phaser.Physics.Arcade);
 
@@ -64,6 +66,8 @@ var level1State = {
 
     // Add controls for the game
   	cursors = game.input.keyboard.createCursorKeys();
+    HelpKeyQ = game.input.keyboard.addKey(Phaser.Keyboard.Q);
+    HelpKeyQ.onDown.add(this.displayHelp, this);
 
     // Add collectables - diamonds
   	diamonds = game.add.group();
@@ -97,9 +101,11 @@ var level1State = {
   	}
 
     // Add score text
-  	scoreText = game.add.text(16, 16, 'Score: ' + score, {fontSize: '32px', fill:'#fff'});
+    var scoreText_style = { font: 'bold 32px Acme', fill: '#fff'};
+  	scoreText = game.add.text(16, 16, 'Score: ' + score, scoreText_style);
     scoreText.fixedToCamera = true;
 
+;
 
 },
 
@@ -173,10 +179,6 @@ var level1State = {
   	//Add and update diamond
   	score += 10;
   	scoreText.text = 'Score: ' + score;
-    if(score == 10)
-    {
-      this.game.state.start('win');
-    }
 },
 
 
@@ -201,7 +203,7 @@ endGame: function(){
 
 // Player opens door
 openDoor: function(){
-  if(doorIsOpen == false)
+  if(doorIsOpen == false && score > 40)
   {
     door.animations.play('open', 30, false);
     doorIsOpen = true;
@@ -217,6 +219,20 @@ completeLevel: function(){
       this.game.state.start('win');
     }
   }
-}
 
+},
+
+  // Display tips to user
+displayHelp: function(){
+
+    // Add Help text
+    var instructions = 'Collect 5 diamonds to open door'
+    var helpText_style = { font: 'bold 32px Acme', fill: '#fff'};
+    helpText = game.add.text(200, 100, instructions, helpText_style);
+    helpText.fixedToCamera = true
+    helpDisplayed = true;
+    game.add.tween(helpText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+
+}
+// end state
 };

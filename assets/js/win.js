@@ -3,14 +3,14 @@ var winState = {
 
     // set background colour
     game.stage.backgroundColor = 0x90C3D4;
-    
+
       // Call the 'start' function when pressing the spacebar
    var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
       space_key.onDown.add(this.start, this);
 
-      // Defining variables
-      var score_style = { font: 'bold 60px VT323', fill: '#ffffff'};
-  var text_style= { font: 'bold 100px VT323', fill: '#ff0000'};
+  // Defining variables
+  var score_style = { font: 'bold 60px Acme', fill: '#ffffff'};
+  var text_style= { font: 'bold 100px Acme', fill: '#ff0000'};
   var x = 400, y = 400;
 
 

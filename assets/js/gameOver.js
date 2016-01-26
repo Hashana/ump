@@ -10,8 +10,8 @@ var gameOverState = {
  space_key.onDown.add(this.start, this);
 
  // Defining variables
-  var instruction_style = { font: 'bold 60px VT323', fill: '#ffffff'};
-	var title_style = { font: 'bold 100px VT323', fill: '#ff0000'};
+  var instruction_style = { font: 'bold 60px Acme', fill: '#ffffff'};
+	var title_style = { font: 'bold 100px Acme', fill: '#ff0000'};
   var x = 400, y = 300;;
 
    // Adding text to screen
