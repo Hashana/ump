@@ -75,15 +75,15 @@ var level1State = {
   	diamonds = game.add.group();
   	diamonds.enableBody = true;
 
-  	//create 12 diamonds evenly spaced
-  	for (var i = 0; i < 12; i++)
+  	//create 6 diamonds evenly spaced
+  	for (var i = 0; i < 6; i++)
   	{
   		//create a diamond in the diamonds group
-  		var diamond = diamonds.create(i * 150,0,'diamond')
+  		var diamond = diamonds.create(i * 350,0,'diamond')
   		//Add gravity
-  		diamond.body.gravity.y = 60;
+  		diamond.body.gravity.y = 600;
   		//Give diamond a random bounce value
-  		diamond.body.bounce.y = 0.7 + Math.random() * 2;
+  		diamond.body.bounce.y = 0.7 + Math.random();
   	}
 
     // create fire to avoid
@@ -96,7 +96,7 @@ var level1State = {
   		//create a fire in the fires group
   		var fire = fires.create(i * 250,0,'fire');
   		//Add gravity
-  		fire.body.gravity.y = 40;
+  		fire.body.gravity.y = 400;
 
   		//Give fires a bounce value
   		fire.body.bounce.y = 0.7;
