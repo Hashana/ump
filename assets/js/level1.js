@@ -21,14 +21,10 @@ var level1State = {
     score = 0;
     doorIsOpen = false;
 
-  	// enable physics
-    //game.physics.startSystem(Phaser.Physics.Arcade);
-
     game.world.setBounds(0, 0, 2000, 600);
 
     // set background colour
     game.stage.backgroundColor = 0xbada55;
-
 
   	// add platforms
   	platforms = game.add.group();
