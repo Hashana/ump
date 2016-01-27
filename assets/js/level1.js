@@ -14,6 +14,7 @@ var doorIsOpen;
 var HelpKeyQ;
 var helpText;
 var deathText;
+var textAlert;
 
 var level1State = {
   create: function() {
@@ -183,19 +184,18 @@ explosion: function(player){
   explosion.animations.add ('explode',[0,1,2,3], 10 ,true);
   explosion.animations.play("explode", 30, false);
   this.combustionDeath();
-  // code delay then uncomment line below!
-//  this.endGame();
 
 },
 
 // If player loses game
 endGame: function(){
-  this.game.state.start('gameOver');
+
+    this.game.state.start('gameOver');
 },
 
 // Player opens door
 openDoor: function(){
-  if(doorIsOpen == false && score > 40)
+  if(doorIsOpen == false && score >= 30)
   {
     door.animations.play('open', 30, false);
     doorIsOpen = true;
@@ -207,11 +207,24 @@ openDoor: function(){
 
 //Player dies to combustionDeath
 combustionDeath: function(){
-  var deathInfo = 'When you touched the flame, the \n potassium in your body expoloded!';
+  var deathInfo = 'When your body touched the flame \n the potassium set on fire! \n You will continue to burn until you melt..';
   var deathInfoText_style = { font: 'bold 32px Acme', fill: '#f00'};
   deathText = game.add.text(200, 200, deathInfo, deathInfoText_style);
   deathText.fixedToCamera = true;
-  game.add.tween(deathText).to({alpha: 0}, 3500, Phaser.Easing.Linear.None, true);
+  game.add.tween(deathText).to({alpha: 0}, 10500, Phaser.Easing.Linear.None, true);
+  this.gameOverInstructions();
+
+},
+
+//Instructions to player to end game
+gameOverInstructions: function(){
+  // Instruct player to end game
+  var textInfo = 'Press Space to continue';
+  var textInfo_style = {font:'bold 32px Acme', fill: '#000'};
+  textAlert = game.add.text(250, 400, textInfo, textInfo_style);
+  textAlert.fixedToCamera = true;
+  var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+  space_key.onDown.add(this.endGame, this);
 },
 
 // Player goes through door if its open
@@ -229,7 +242,7 @@ completeLevel: function(){
   // Display tips to user
 displayHelp: function(){
     // Help text for player
-    var instructions = 'Collect 5 diamonds to open door';
+    var instructions = 'Collect 3 diamonds to open door';
     var helpText_style = { font: 'bold 32px Acme', fill: '#fff'};
     helpText = game.add.text(200, 100, instructions, helpText_style);
     helpText.fixedToCamera = true;

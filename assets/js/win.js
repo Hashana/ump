@@ -1,12 +1,12 @@
 var winState = {
   create: function() {
 
-    // set background colour
-    game.stage.backgroundColor = 0x90C3D4;
+  // set background colour
+  game.stage.backgroundColor = 0x90C3D4;
 
-      // Call the 'start' function when pressing the spacebar
+    // Call the 'start' function when pressing the spacebar
    var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-      space_key.onDown.add(this.start, this);
+   space_key.onDown.add(this.start, this);
 
   // Defining variables
   var score_style = { font: 'bold 60px Acme', fill: '#ffffff'};
@@ -15,15 +15,14 @@ var winState = {
 
 
   // Adding a text centered on the screen
-      var text = this.game.add.text(x, y-100, 'You Win!', text_style);
-      text.anchor.setTo(0.5, 0.5);
+  var text = this.game.add.text(x, y-100, 'You Win!', text_style);
+  text.anchor.setTo(0.5, 0.5);
 
-      // If the user already played
-     if (score > 0) {
-          // Display its score
-          var score_label = this.game.add.text(x, y+50, "Score: " + score, score_style);
-          score_label.anchor.setTo(0.5, 0.5);
-       }
+    // Display score
+   if (score > 0) {
+      var score_label = this.game.add.text(x, y+50, "Score: " + score, score_style);
+      score_label.anchor.setTo(0.5, 0.5);
+   }
 
   },
 
