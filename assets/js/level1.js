@@ -13,6 +13,7 @@ var door;
 var doorIsOpen;
 var HelpKeyQ;
 var helpText;
+var deathText;
 
 var level1State = {
   create: function() {
@@ -206,11 +207,11 @@ openDoor: function(){
 
 //Player dies to combustionDeath
 combustionDeath: function(){
-  var deathInfo = 'When you touched the flame, the \n potassium in your body expoloded'
-  var deathInfoText_style = { font: 'bold 32px Acme', fill: '#fff'};
-  helpText = game.add.text(200, 100, deathInfo, deathInfoText_style);
-  deathInfo.fixedToCamera = true
-  game.add.tween(helpText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+  var deathInfo = 'When you touched the flame, the \n potassium in your body expoloded!';
+  var deathInfoText_style = { font: 'bold 32px Acme', fill: '#f00'};
+  deathText = game.add.text(200, 200, deathInfo, deathInfoText_style);
+  deathText.fixedToCamera = true;
+  game.add.tween(deathText).to({alpha: 0}, 3500, Phaser.Easing.Linear.None, true);
 },
 
 // Player goes through door if its open
@@ -228,10 +229,10 @@ completeLevel: function(){
   // Display tips to user
 displayHelp: function(){
     // Help text for player
-    var instructions = 'Collect 5 diamonds to open door'
+    var instructions = 'Collect 5 diamonds to open door';
     var helpText_style = { font: 'bold 32px Acme', fill: '#fff'};
     helpText = game.add.text(200, 100, instructions, helpText_style);
-    helpText.fixedToCamera = true
+    helpText.fixedToCamera = true;
     game.add.tween(helpText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
 
 }
