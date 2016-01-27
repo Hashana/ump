@@ -22,7 +22,7 @@ var level1State = {
     doorIsOpen = false;
 
   	// enable physics
-    game.physics.startSystem(Phaser.Physics.Arcade);
+    //game.physics.startSystem(Phaser.Physics.Arcade);
 
     game.world.setBounds(0, 0, 2000, 600);
 
