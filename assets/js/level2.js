@@ -1,3 +1,0 @@
-//var level2State = {
-
-//};

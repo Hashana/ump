@@ -15,6 +15,7 @@ var HelpKeyQ;
 var helpText;
 var deathText;
 var textAlert;
+var sounds = {};
 
 var level1State = {
   create: function() {
@@ -103,7 +104,9 @@ var level1State = {
   	scoreText = game.add.text(16, 16, 'Score: ' + score, scoreText_style);
     scoreText.fixedToCamera = true;
 
-;
+    // Add sound effects
+    sounds.openDoorSfx = game.add.audio('openDoor');
+    sounds.explosionSfx = game.add.audio('explosion');
 
 },
 
@@ -172,13 +175,15 @@ var level1State = {
 
 
 explosion: function(player){
-
+  // remove player sprite
   player.kill();
+  //Add sound effect
+  sounds.explosionSfx.play();
   // Add explosion for death animation
   explosion = this.game.add.sprite(player.body.x, player.body.y, 'explosion');
   explosion.anchor.setTo(0.5,0.5);
   explosion.animations.add ('explode',[0,1,2,3], 10 ,true);
-  explosion.animations.play("explode", 30, false);
+  explosion.animations.play("explode", 10, false);
   this.combustionDeath();
 
 },
@@ -193,6 +198,7 @@ endGame: function(){
 openDoor: function(){
   if(doorIsOpen == false && score >= 30)
   {
+    sounds.openDoorSfx.play();
     door.animations.play('open', 30, false);
     doorIsOpen = true;
   }
