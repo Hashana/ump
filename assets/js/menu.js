@@ -22,7 +22,7 @@ var menuState = {
     text.anchor.setTo(0.5, 0.5)
 },
 
-  // Start the actual game
+  // Start the game
   start: function() {
       this.game.state.start('level1');
   }

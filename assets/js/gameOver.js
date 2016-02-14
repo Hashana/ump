@@ -29,7 +29,7 @@ var gameOverState = {
   text.anchor.setTo(0.5, 0.5)
 },
 
-// Start the actual game
+// Display Menu
 start: function() {
     this.game.state.start('menu');
 }
