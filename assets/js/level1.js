@@ -39,10 +39,17 @@ var level1State = {
   	// stop it from moving when colliding with the player
   	ground.body.immovable = true;
 
+    // create ledges for level
   	var ledge = platforms.create(400,400, 'ground');
   	ledge.body.immovable = true;
   	ledge = platforms.create(-150, 250, 'ground');
+  	ledge.body.immovable = true
+    ledge = platforms.create(600, 250, 'ground');
   	ledge.body.immovable = true;
+    ledge = platforms.create(900, 250, 'ground');
+    ledge.body.immovable = true;
+    ledge = platforms.create(1400, 250, 'ground');
+    ledge.body.immovable = true;
 
     //Add door for win condition
     door = game.add.sprite(1800, game.world.height - 150, 'door');
@@ -235,7 +242,7 @@ completeLevel: function(){
   {
     if(cursors.up.isDown)
     {
-      this.game.state.start('win');
+      this.game.state.start('level2');
     }
   }
 

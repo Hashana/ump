@@ -1,7 +1,10 @@
 var loadState = {
 
   preload: function(){
-    //game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+    // tilemap JSON and image file
+    game.load.tilemap('level1Map', 'assets/maps/level1.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('tieset', 'assets/maps/tieset.png');
+
 		game.load.image('ground', 'assets/images/platform.png');
     game.load.spritesheet('door', 'assets/images/door.png', 63, 84);
 		game.load.image('diamond', 'assets/images/diamond.png');
