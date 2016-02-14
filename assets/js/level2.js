@@ -5,12 +5,12 @@ var level2State = {
   create: function(){
     game.stage.backgroundColor = 0xbada55;
     map = game.add.tilemap('level1Map');
-    map.addTilesetImage('tieset', 'tieset');
+    map.addTilesetImage('tileset1', 'tileset1');
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
 
     // Add Player//add player
-  	player = game.add.sprite(50, 12319, 'dude');
+  	player = game.add.sprite(50, 666, 'dude');
   	game.physics.arcade.enable(player);
   	player.body.bounce.y = 0.2;
   	player.body.gravity.y = 300;
