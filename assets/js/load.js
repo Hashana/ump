@@ -1,10 +1,9 @@
 var loadState = {
 
   preload: function(){
-    // tilemap JSON and image file
-  //  game.load.tilemap('level1Map', 'assets/maps/level1.json', null, Phaser.Tilemap.TILED_JSON);
-    //game.load.image('tieset', 'assets/maps/tieset.png');
-    game.load.tilemap('level1Map', 'assets/maps/Level1.json', null, Phaser.Tilemap.TILED_JSON);
+    // tilemap JSON and image files
+    game.load.tilemap('level1Map', 'assets/maps/level1.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('level2Map', 'assets/maps/level2.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tileset1', 'assets/maps/tileset1.png');
 
 		game.load.image('ground', 'assets/images/platform.png');

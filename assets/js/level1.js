@@ -56,7 +56,7 @@ var level1State = {
     game.physics.arcade.enable(door);
     door.body.immovable = true;
     door.animations.add('open', [0,1,2,3], 1, true);
-    //door.animations.add('close', [3,2,1,0], 1, true);
+
 
     //add player
   	player = game.add.sprite(400, game.world.height - 150, 'dude');
@@ -121,35 +121,7 @@ var level1State = {
   	// Player collides with the ground and doesn't fall through it
   	game.physics.arcade.collide(player, platforms);
 
-  	 //  Reset the players velocity (movement)
-  	 player.body.velocity.x = 0;
-
-     playerY = player.body.velocity.y;
-     playerX = player.body.velocity.x;
-     if(cursors.left.isDown)
-  	 {
-  		 //Move to the left
-  		 player.body.velocity.x = -150;
-  		 player.animations.play('left');
-     }
-  	 else if(cursors.right.isDown)
-  	 {
-  		  // Move right
-  			player.body.velocity.x = 150;
-  			player.animations.play('right');
-      }
-  	 else
-  	 {
-  			//Stand still
-  			player.animations.stop();
-  			player.frame = 4;
-  		}
-
-       // Allows player to jump if they are touching the ground
-  		if(cursors.up.isDown && player.body.touching.down)
-  		{
-  			player.body.velocity.y = -350;
-  		}
+  	 updatePlayer();
 
      //stop diamonds falling through the ground
   	 game.physics.arcade.collide(diamonds, platforms);
