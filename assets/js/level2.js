@@ -18,6 +18,7 @@ var helpText;
 var deathText;
 var textAlert;
 var waterTile;
+var bgSound;
 var sounds = {};
 
 var level2State = {
@@ -59,9 +60,16 @@ var level2State = {
     scoreText = game.add.text(16, 16, 'Score: ' + score, scoreText_style);
     scoreText.fixedToCamera = true;
 
+    // Background sound  on a loop
+    bgSound = game.add.audio('music1');
+    bgSound.loop = true;
+    bgSound.play('');
+
     // Add sound effects
     sounds.openDoorSfx = game.add.audio('openDoor');
     sounds.explosionSfx = game.add.audio('explosion');
+    sounds.jumpSfx = game.add.audio('jump');
+    sounds.pickUpSfx = game.add.audio('pickup');
 
     // Add controls for the game
   	cursors = game.input.keyboard.createCursorKeys();

@@ -1,6 +1,7 @@
 var textAlert;
 var deathText;
 
+
 function updatePlayer(){
   movePlayer();
   // check for overlap of player and diamond - calls collectdDiamond function if found
@@ -38,6 +39,7 @@ function movePlayer(){
       if (player.body.onFloor())
       {
           player.body.velocity.y = -350;
+          sounds.jumpSfx.play();
       }
   }
 }
@@ -45,7 +47,7 @@ function movePlayer(){
   function collectDiamond(player, diamond){
    //remove diamond from the screen
    diamond.kill();
-
+   sounds.pickUpSfx.play();
    //Add and update diamond
    score += 10;
    scoreText.text = 'Score: ' + score;
@@ -89,6 +91,7 @@ function movePlayer(){
 
 // If player loses game
  function endGame(){
-
+   // stop music and start gameOver state
+   bgSound.stop('');
     this.game.state.start('gameOver');
 }

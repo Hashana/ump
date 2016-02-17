@@ -114,6 +114,7 @@ var level1State = {
     // Add sound effects
     sounds.openDoorSfx = game.add.audio('openDoor');
     sounds.explosionSfx = game.add.audio('explosion');
+    sounds.jumpSfx = game.add.audio('jump');
 
 },
 
