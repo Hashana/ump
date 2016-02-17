@@ -1,3 +1,5 @@
+var bgSound;
+var sounds = {};
 var level3State = {
   create: function(){
     game.stage.backgroundColor = '#7ec0ee';
@@ -20,43 +22,25 @@ var level3State = {
     // Add controls for the game
     cursors = game.input.keyboard.createCursorKeys();
 
+    // Background sound  on a loop
+    bgSound = game.add.audio('music2');
+    bgSound.loop = true;
+    bgSound.play('');
+
+    // Add sound effects
+    sounds.openDoorSfx = game.add.audio('openDoor');
+    sounds.explosionSfx = game.add.audio('explosion');
+    sounds.jumpSfx = game.add.audio('jump');
+    sounds.pickUpSfx = game.add.audio('pickup');
+
 },
 
 update: function(){
   // stop player and collectables falling through the ground.
   game.physics.arcade.collide(player, layer);
+  updatePlayer();
 
-  //  Reset the players velocity (movement)
-  player.body.velocity.x = 0;
-
-  playerY = player.body.velocity.y;
-  playerX = player.body.velocity.x;
-  if(cursors.left.isDown)
-  {
-    //Move to the left
-    player.body.velocity.x = -150;
-    player.animations.play('left');
-  }
-  else if(cursors.right.isDown)
-  {
-     // Move right
-     player.body.velocity.x = 150;
-     player.animations.play('right');
-   }
-  else
-  {
-     //Stand still
-     player.animations.stop();
-     player.frame = 4;
-   }
-
-   if (cursors.up.isDown){
-      if (player.body.onFloor())
-      {
-          player.body.velocity.y = -350;
-      }
-  }
-
+  
 
 }
 

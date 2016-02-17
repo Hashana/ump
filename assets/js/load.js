@@ -20,6 +20,7 @@ var loadState = {
     game.load.audio('jump', 'assets/sound/jump.ogg'),
     game.load.audio('pickup', 'assets/sound/pickup.ogg'),
     game.load.audio('music1', 'assets/sound/RetroBeat.ogg')
+    game.load.audio('music2', 'assets/sound/RetroComedy.ogg')
 },
 
 	create: function() {
