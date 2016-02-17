@@ -130,7 +130,7 @@ var level2State = {
    //Player goes through door.
    game.physics.arcade.overlap(player, door, this.completeLevel,null, this);
    //Player water death
-  game.physics.arcade.overlap(player, waterTile, this.waterDeath, null, this);
+//  game.physics.arcade.overlap(player, waterTile, this.waterDeath, null, this);
 
   },
 

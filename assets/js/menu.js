@@ -1,6 +1,6 @@
 var menuState = {
 
-   create: function () {
+   create: function() {
 
    // set background colour
    game.stage.backgroundColor = 0x90C3D4;
@@ -8,10 +8,13 @@ var menuState = {
    var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
    space_key.onDown.add(this.start, this);
 
+   // Call the tutorial function when pressing
+   var tutorial_key = this.game.input.keyboard.addKey(Phaser.Keyboard.T);
+   tutorial_key.onDown.add(this.tutorial, this);
+
    // Defining variables
     var start_style = { font: 'bold 60px Acme', fill: '#1a8cff'};
 		var title_style = { font: 'bold 100px Acme', fill: '#ffff66'};
-    var instruction_style = {font: 'bold 40px Acme', fill: '#ffffff'};
     var x = 400, y = 300;
 
      // Adding title text centered on the screen
@@ -19,17 +22,16 @@ var menuState = {
     text.anchor.setTo(0.5, 0.5)
 
     // Adding instructions centered on the screen
-    var text = this.game.add.text(x , y , "Use arrow keys to move left and right \n         use up to jump & Q to get help!", instruction_style);
-    text.anchor.setTo(0.5, 0.5)
-
-
-    // Adding instructions centered on the screen
-    var text = this.game.add.text(x, y+200, "Press space to start", start_style);
+    var text = this.game.add.text(x, y+200, "Press space to start \n or 'T' to do the tutorial", start_style);
     text.anchor.setTo(0.5, 0.5)
 },
 
   // Start the game
   start: function() {
       this.game.state.start('level2');
+  },
+  // Start the tutorial
+  tutorial: function() {
+      this.game.state.start('tutorial');
   }
 };
