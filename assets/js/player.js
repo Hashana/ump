@@ -7,7 +7,7 @@ function updatePlayer(){
   // check for overlap of player and diamond - calls collectdDiamond function if found
   game.physics.arcade.overlap(player, diamonds, this.collectDiamond, null, this);
   // Player explosion upon fire death
-   game.physics.arcade.overlap(player, fires, this.explosion, null, this);
+   game.physics.arcade.overlap(player, fires, this.combustionDeath, null, this);
 }
 
 function movePlayer(){
@@ -63,7 +63,8 @@ function movePlayer(){
   explosion.anchor.setTo(0.5,0.5);
   explosion.animations.add ('explode',[0,1,2,3], 10 ,true);
   explosion.animations.play("explode", 10, false);
-  combustionDeath();
+  gameOverInstructions();
+
 }
 
   //Player dies to combustionDeath
@@ -73,7 +74,7 @@ function movePlayer(){
   deathText = game.add.text(200, 200, deathInfo, deathInfoText_style);
   deathText.fixedToCamera = true;
   game.add.tween(deathText).to({alpha: 0}, 10500, Phaser.Easing.Linear.None, true);
-  gameOverInstructions();
+  explosion(player);
 
 }
 
