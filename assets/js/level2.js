@@ -17,7 +17,7 @@ var HelpKeyQ;
 var helpText;
 var deathText;
 var textAlert;
-var waterTile;
+var waterTiles = {};
 var bgSound;
 var sounds = {};
 var deathType;
@@ -28,9 +28,9 @@ var level2State = {
     map = game.add.tilemap('level1Map');
     map.addTilesetImage('tileset1', 'tileset1');
     // Identify the 3 water tiles, call waterDeath() on collision with player
-    map.setTileIndexCallback(1, this.waterDeath, this);
-    map.setTileIndexCallback(2, this.waterDeath, this);
-    map.setTileIndexCallback(3, this.waterDeath, this);
+    waterTiles.One = map.setTileIndexCallback(1, waterDeath, this);
+    waterTiles.Two = map.setTileIndexCallback(2, waterDeath, this);
+    waterTiles.Three = map.setTileIndexCallback(3, waterDeath, this);
     // Create map layer from tilemap layer
     layer = map.createLayer('Tile Layer 1');
     // resize world to fit map
@@ -152,34 +152,11 @@ var level2State = {
     {
       if(cursors.up.isDown)
       {
+        bgSound.stop('');
         this.game.state.start('level3');
       }
     }
 },
-
-
-
-  //Player dies to water
-  waterDeath: function(sprite){
-    if(sprite == player){
-      var waterDeathInfo = 'When your body touched the water \n the potassium in your body reacted \n with the oxygen in the air! \n You will continue to burn until you melt..';
-      var waterDeathInfoText_style = { font: 'bold 32px Acme', fill: '#f00'};
-      deathText = game.add.text(200, 200, waterDeathInfo, waterDeathInfoText_style);
-      deathText.fixedToCamera = true;
-      game.add.tween(waterDeathInfo).to({alpha: 0}, 10500, Phaser.Easing.Linear.None, true);
-      explosion(player);
-    }
-    else {
-      return
-    }
-
-},
-
-
-
-
-
-
 
     // Display tips to user
     displayHelp: function(){

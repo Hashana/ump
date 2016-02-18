@@ -1,41 +1,89 @@
 var textAlert;
 var deathText;
+var isMoving;
+var tile;
+var slideSpeed;
 
 
-function updatePlayer(){
-  movePlayer();
+function updatePlayer(ice){
+//  decideMovement();
+  movePlayer(ice);
   // check for overlap of player and diamond - calls collectdDiamond function if found
   game.physics.arcade.overlap(player, diamonds, this.collectDiamond, null, this);
   // Player explosion upon fire death
-   game.physics.arcade.overlap(player, fires, this.combustionDeath, null, this);
+  game.physics.arcade.overlap(player, fires, this.combustionDeath, null, this);
+  // Check for collision with icy tiles
+  //game.physics.arcade.overlap(player, icyTile, this.icyMovement, null, this);
 }
 
-function movePlayer(){
+//function decideMovement(){
+  //tile = map.getTileBelow(player.body.x, player.body.y)
+  /*foreach(var mapTile in icyTiles){
+    if(tile == mapTile){
+      icyMovement();
+    }
+  }
+  else {*/
+    //movePlayer();
+  //}
+
+
+function movePlayer(ice){
+  var isOnIce = ice
+
+  if (slideSpeed < 0)
+    slideSpeed = slideSpeed + 1
+  else if (slideSpeed > 0)
+    slideSpeed = slideSpeed - 1
+
+
   //  Reset the players velocity (movement)
   player.body.velocity.x = 0;
 
   playerY = player.body.velocity.y;
   playerX = player.body.velocity.x;
+
+  if (isOnIce)
+  {
+    if (player.body.facing == Phaser.LEFT)
+      player.body.velocity.x += slideSpeed
+    else if (player.body.facing == Phaser.RIGHT) {
+      player.body.velocity.x += slideSpeed
+    }
+  }
+
   if(cursors.left.isDown)
   {
-    //Move to the left
-    player.body.velocity.x = -150;
-    player.animations.play('left');
+      //Move normally to the left
+      player.body.velocity.x = -150;
+      player.animations.play('left');
+
+      if (isOnIce){
+        slideSpeed = -100;
+      }
+
   }
   else if(cursors.right.isDown)
   {
-     // Move right
-     player.body.velocity.x = 150;
-     player.animations.play('right');
+         // Move right normally
+       player.body.velocity.x = 150;
+       player.animations.play('right');
+
+       if (isOnIce){
+         slideSpeed = 100;
+       }
+
    }
   else
   {
-     //Stand still
+     //Stand still - no key presses
      player.animations.stop();
      player.frame = 4;
    }
 
+
    if (cursors.up.isDown){
+      // Checks player is touching the floor before jumping
       if (player.body.onFloor())
       {
           player.body.velocity.y = -350;
@@ -43,6 +91,41 @@ function movePlayer(){
       }
   }
 }
+
+  function icyMovement(){
+    //  Reset the players velocity (movement)
+    player.body.velocity.x = 0;
+
+    playerY = player.body.velocity.y;
+    playerX = player.body.velocity.x;
+    if(cursors.left.isDown)
+    {
+      //Move to the left
+      player.body.velocity.x = -150 * 0.8;
+      player.animations.play('left');
+    }
+    else if(cursors.right.isDown)
+    {
+       // Move right
+       player.body.velocity.x = 150 * 0.8;
+       player.animations.play('right');
+     }
+    else
+    {
+       //Stand still
+       player.animations.stop();
+       player.frame = 4;
+     }
+
+     if (cursors.up.isDown){
+        if (player.body.onFloor())
+        {
+            player.body.velocity.y = -350;
+            sounds.jumpSfx.play();
+        }
+    }
+}
+
 
   function collectDiamond(player, diamond){
    //remove diamond from the screen
@@ -92,7 +175,7 @@ function movePlayer(){
   //Player dies to water
   function waterDeath(sprite){
   if(sprite == player){
-    var waterDeathInfo = 'When your body touched the water \n the potassium in your body reacted \n with the oxygen in the air! \n You will continue to burn until you melt..';
+    var waterDeathInfo = 'When your body touched the water \n the potassium in your body reacted \n with the oxygen! \n You will continue to burn until you melt..';
     var waterDeathInfoText_style = { font: 'bold 32px Acme', fill: '#f00'};
     var deathText = game.add.text(200, 200, waterDeathInfo, waterDeathInfoText_style);
     deathText.fixedToCamera = true;

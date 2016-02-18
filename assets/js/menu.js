@@ -28,7 +28,7 @@ var menuState = {
 
   // Start the game
   start: function() {
-      this.game.state.start('level2');
+      this.game.state.start('level3');
   },
   // Start the tutorial
   tutorial: function() {

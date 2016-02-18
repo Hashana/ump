@@ -13,7 +13,7 @@ var tutorialState = {
     var x = 400, y = 300;
 
     // Adding instructions centered on the screen
-    var text = this.game.add.text(x , y , "Use arrow keys to move left and right \n         use up to jump & Q to get help!", instruction_style);
+    var text = this.game.add.text(x , y , "Use arrow keys to move left and right \n         use up to jump & Q to get help!  \n Press Space to start the game", instruction_style);
     text.anchor.setTo(0.5, 0.5);
 
   },
