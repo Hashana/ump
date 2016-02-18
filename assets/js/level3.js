@@ -55,6 +55,8 @@ update: function(){
   // stop player and collectables falling through the ground.
   game.physics.arcade.collide(player, layer);
 
+  // check if player is on ice to call slide movement if required
+  // pass isOnIce variable to updatePlayer()
   if (player.body.onFloor()){
     // ice movement
     if (player.body.velocity.x != 0){
@@ -83,11 +85,9 @@ displayHelp: function(){
 
 },
 
-
-
 };
 
-function iceTest()
-{
-  console.log('touching ice');
-}
+//function iceTest()
+//{
+  //console.log('touching ice');
+//}

@@ -43,14 +43,13 @@ function movePlayer(ice){
   playerY = player.body.velocity.y;
   playerX = player.body.velocity.x;
 
-  if (isOnIce)
-  {
+
     if (player.body.facing == Phaser.LEFT)
       player.body.velocity.x += slideSpeed
     else if (player.body.facing == Phaser.RIGHT) {
       player.body.velocity.x += slideSpeed
     }
-  }
+
 
   if(cursors.left.isDown)
   {
@@ -59,7 +58,7 @@ function movePlayer(ice){
       player.animations.play('left');
 
       if (isOnIce){
-        slideSpeed = -100;
+        slideSpeed = -200;
       }
 
   }
@@ -70,7 +69,7 @@ function movePlayer(ice){
        player.animations.play('right');
 
        if (isOnIce){
-         slideSpeed = 100;
+         slideSpeed = 200;
        }
 
    }
@@ -92,39 +91,6 @@ function movePlayer(ice){
   }
 }
 
-  function icyMovement(){
-    //  Reset the players velocity (movement)
-    player.body.velocity.x = 0;
-
-    playerY = player.body.velocity.y;
-    playerX = player.body.velocity.x;
-    if(cursors.left.isDown)
-    {
-      //Move to the left
-      player.body.velocity.x = -150 * 0.8;
-      player.animations.play('left');
-    }
-    else if(cursors.right.isDown)
-    {
-       // Move right
-       player.body.velocity.x = 150 * 0.8;
-       player.animations.play('right');
-     }
-    else
-    {
-       //Stand still
-       player.animations.stop();
-       player.frame = 4;
-     }
-
-     if (cursors.up.isDown){
-        if (player.body.onFloor())
-        {
-            player.body.velocity.y = -350;
-            sounds.jumpSfx.play();
-        }
-    }
-}
 
 
   function collectDiamond(player, diamond){
