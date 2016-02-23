@@ -2,15 +2,19 @@ var menuState = {
 
    create: function() {
 
-   // set background colour
-   game.stage.backgroundColor = 0x90C3D4;
+   // Add menu background image
+   menuBg = game.add.tileSprite(0, 0, 800, 600, 'menuBg');
    // Call the 'start' function when pressing the spacebar
    var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
    space_key.onDown.add(this.start, this);
 
-   // Call the tutorial function when pressing
+   // Call the tutorial function when pressing 't'
    var tutorial_key = this.game.input.keyboard.addKey(Phaser.Keyboard.T);
-   tutorial_key.onDown.add(this.tutorial, this);
+   tutorial_key.onDown.add(this.skipTutorial, this);
+
+   // Call the hidden dev/trial level function when pressing 'p'
+   var trialLevel_key = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
+   trialLevel_key.onDown.add(this.trialLevel, this);
 
    // Defining variables
     var start_style = { font: 'bold 60px Acme', fill: '#1a8cff'};
@@ -26,12 +30,22 @@ var menuState = {
     text.anchor.setTo(0.5, 0.5)
 },
 
-  // Start the game
-  start: function() {
-      this.game.state.start('tutorial');
-  },
-  // Start the tutorial
-  tutorial: function() {
-      this.game.state.start('trialLevel');
-  }
+// Start the introduction
+start: function() {
+    this.game.state.start('tutorial');
+},
+// Skip intro and start game
+skipTutorial: function() {
+    this.game.state.start('level2');
+},
+
+// Start the 'developer trial level'
+trialLevel: function() {
+    this.game.state.start('trialLevel');
+},
+
+update: function(){
+  //  Scroll the background
+  menuBg.tilePosition.x -= 2;
+}
 };

@@ -117,6 +117,7 @@ var trialLevelState = {
     sounds.explosionSfx = game.add.audio('explosion');
     sounds.jumpSfx = game.add.audio('jump');
     sounds.pickUpSfx = game.add.audio('pickup');
+    sounds.doorLocked = game.add.audio('doorLocked');
 
     // Background sound  on a loop
     bgSound = game.add.audio('music1');
@@ -227,6 +228,7 @@ openDoor: function(){
     doorIsOpen = true;
   }
   else {
+    sounds.doorLocked.play();
   this.displayHelp();
   }
 },

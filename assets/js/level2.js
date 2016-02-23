@@ -26,6 +26,8 @@ var locks;
 var level2State = {
   create: function(){
     game.stage.backgroundColor = '#7ec0ee';
+
+    // Add tiled map
     map = game.add.tilemap('level1Map');
     map.addTilesetImage('tileset1', 'tileset1');
     // Identify the 3 water tiles, call waterDeath() on collision with player
@@ -55,7 +57,7 @@ var level2State = {
     // Add padlock to door
     locks = game.add.group();
     locks.enableBody = true;
-    var lock = locks.create(4840, game.world.height - 279, 'lock');
+    var lock = locks.create(4870, game.world.height - 240, 'lock');
 
 
 
@@ -79,12 +81,16 @@ var level2State = {
     bgSound = game.add.audio('music1');
     bgSound.loop = true;
     bgSound.play('');
+  
+
 
     // Add sound effects
     sounds.openDoorSfx = game.add.audio('openDoor');
     sounds.explosionSfx = game.add.audio('explosion');
     sounds.jumpSfx = game.add.audio('jump');
     sounds.pickUpSfx = game.add.audio('pickup');
+    sounds.doorLockedSfx = game.add.audio('doorLocked');
+    sounds.volume = 0.1;
 
     // Add controls for the game
   	cursors = game.input.keyboard.createCursorKeys();
@@ -140,7 +146,7 @@ var level2State = {
    //Player goes through door.
    game.physics.arcade.overlap(player, door, this.completeLevel,null, this);
    //Player water death
-//  game.physics.arcade.overlap(player, waterTile, this.waterDeath, null, this);
+   game.physics.arcade.overlap(player, waterTiles, this.waterDeath, null, this);
 
   },
 
@@ -154,6 +160,7 @@ var level2State = {
     }
     else {
     this.displayHelp();
+    sounds.doorLockedSfx.play();
     }
   },
   // Player goes through door if its open
@@ -177,5 +184,5 @@ var level2State = {
     helpText.fixedToCamera = true;
     game.add.tween(helpText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
 
-  },
+  }
 };
