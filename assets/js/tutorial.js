@@ -21,26 +21,19 @@ var tutorialState = {
     text1.anchor.setTo(0.5, 0.5);
 
   // Adding story & instructions centered on the screen
-    var text2 = this.game.add.text(400 , 500 , "Press R to repeat this message\n Or press Space to start the game", instruction_style);
+    var text2 = this.game.add.text(400 , 300 , "Press R to repeat this message\n Or press Space to start the game", instruction_style);
     text2.anchor.setTo(0.5, 0.5);
     text2.alpha = 0;
 
 
 
     // Make text scroll up and off the screen
-    var storyTween = game.add.tween(text1).to({ y: -(this.game.height) }, 61000, Phaser.Easing.Linear.InOut, true);
+    var storyTween = game.add.tween(text1).to({ y: -(this.game.height) }, 50000, Phaser.Easing.Linear.InOut, true);
     //Provide instructions on how to proceed
-    var instructionTween = game.add.tween(text2).to({alpha:1},2000, "Linear", true,37000);
+    var instructionTween = game.add.tween(text2).to({alpha:1},2000, "Linear", true,40000);
     storyTween.chain(instructionTween);
 
-
-
 },
-
- // Start tweens
- startTweens: function(){
-   storyTween.start();
- },
 
   // Start the game
   start: function() {

@@ -22,16 +22,16 @@ var menuState = {
     text.anchor.setTo(0.5, 0.5)
 
     // Adding instructions centered on the screen
-    var text = this.game.add.text(x, y+200, "Press space to start \n or 'T' to do the tutorial", start_style);
+    var text = this.game.add.text(x, y+200, "Press space to start \n or 'T' to skip the intro", start_style);
     text.anchor.setTo(0.5, 0.5)
 },
 
   // Start the game
   start: function() {
-      this.game.state.start('level2');
+      this.game.state.start('tutorial');
   },
   // Start the tutorial
   tutorial: function() {
-      this.game.state.start('tutorial');
+      this.game.state.start('level2');
   }
 };
