@@ -32,6 +32,6 @@ var menuState = {
   },
   // Start the tutorial
   tutorial: function() {
-      this.game.state.start('level2');
+      this.game.state.start('trialLevel');
   }
 };

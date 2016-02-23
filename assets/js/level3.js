@@ -86,8 +86,3 @@ displayHelp: function(){
 },
 
 };
-
-//function iceTest()
-//{
-  //console.log('touching ice');
-//}

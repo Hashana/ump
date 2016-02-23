@@ -21,6 +21,7 @@ var waterTiles = {};
 var bgSound;
 var sounds = {};
 var deathType;
+var locks;
 
 var level2State = {
   create: function(){
@@ -28,6 +29,7 @@ var level2State = {
     map = game.add.tilemap('level1Map');
     map.addTilesetImage('tileset1', 'tileset1');
     // Identify the 3 water tiles, call waterDeath() on collision with player
+    // uncomment 3 lines below after debugging!!
     waterTiles.One = map.setTileIndexCallback(1, waterDeath, this);
     waterTiles.Two = map.setTileIndexCallback(2, waterDeath, this);
     waterTiles.Three = map.setTileIndexCallback(3, waterDeath, this);
@@ -50,6 +52,13 @@ var level2State = {
     door.body.immovable = true;
     door.animations.add('open', [0,1,2,3], 1, true);
 
+    // Add padlock to door
+    locks = game.add.group();
+    locks.enableBody = true;
+    var lock = locks.create(4840, game.world.height - 279, 'lock');
+
+
+
     // Add Player//add player
   	player = game.add.sprite(50, game.world.height - 98, 'dude');
   	game.physics.arcade.enable(player);
@@ -58,6 +67,7 @@ var level2State = {
   	player.body.collideWorldBounds = true;
     player.animations.add('left', [0,1,2,3], 10, true);
   	player.animations.add('right', [5,6,7,8], 10, true);
+    // focus camera to stay with player
     game.camera.follow(player);
 
     // Add score text

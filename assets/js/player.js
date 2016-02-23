@@ -12,20 +12,9 @@ function updatePlayer(ice){
   game.physics.arcade.overlap(player, diamonds, this.collectDiamond, null, this);
   // Player explosion upon fire death
   game.physics.arcade.overlap(player, fires, this.combustionDeath, null, this);
-  // Check for collision with icy tiles
-  //game.physics.arcade.overlap(player, icyTile, this.icyMovement, null, this);
+
 }
 
-//function decideMovement(){
-  //tile = map.getTileBelow(player.body.x, player.body.y)
-  /*foreach(var mapTile in icyTiles){
-    if(tile == mapTile){
-      icyMovement();
-    }
-  }
-  else {*/
-    //movePlayer();
-  //}
 
 
 function movePlayer(ice){

@@ -9,6 +9,7 @@ var loadState = {
     //Load images
 		game.load.image('ground', 'assets/images/platform.png');
     game.load.spritesheet('door', 'assets/images/door.png', 63, 84);
+    game.load.image('lock', 'assets/images/lock.png')
 		game.load.image('diamond', 'assets/images/diamond.png');
     game.load.image('fire', 'assets/images/fire.png');
     game.load.spritesheet('dude', 'assets/images/dude.png', 32,48);
