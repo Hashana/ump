@@ -15,6 +15,7 @@ var loadState = {
     game.load.image('waterBottle', 'assets/images/water.png')
 		game.load.image('diamond', 'assets/images/diamond.png');
     game.load.image('fire', 'assets/images/fire.png');
+    game.load.image('mixingStation', 'assets/images/mixingStation.png');
 
     //Load spritesheets
     game.load.spritesheet('dude', 'assets/images/dude.png', 32,48);
