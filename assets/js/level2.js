@@ -21,6 +21,8 @@ var waterTiles = {};
 var bgSound;
 var sounds = {};
 var deathType;
+var waterBottles;
+var hasWater;
 
 var level2State = {
   create: function(){
@@ -74,8 +76,6 @@ var level2State = {
     bgSound.loop = true;
     bgSound.play('');
 
-
-
     // Add sound effects
     sounds.openDoorSfx = game.add.audio('openDoor');
     sounds.explosionSfx = game.add.audio('explosion');
@@ -88,6 +88,12 @@ var level2State = {
   	cursors = game.input.keyboard.createCursorKeys();
     HelpKeyQ = game.input.keyboard.addKey(Phaser.Keyboard.Q);
     HelpKeyQ.onDown.add(this.displayHelp, this);
+
+    // Add educational elements to level
+    waterBottles = game.add.group()
+    waterBottles.enableBody = true;
+    var waterbottle = waterBottles.create(3675, 539, 'waterBottle');
+    hasWater == false;
 
     // Add collectables - diamonds
   	diamonds = game.add.group();
@@ -139,7 +145,8 @@ var level2State = {
    game.physics.arcade.overlap(player, door, this.completeLevel,null, this);
    //Player water death
    game.physics.arcade.overlap(player, waterTiles, this.waterDeath, null, this);
-
+   //Player collects water
+   game.physics.arcade.overlap(player, waterBottles, this.pickUpWater, null, this);
   },
 
   // Player opens door
@@ -167,15 +174,28 @@ var level2State = {
     }
 },
 
+pickUpWater: function(player, waterBottle){
+  //remove diamond from the screen
+  waterBottle.kill();
+  sounds.pickUpSfx.play();
+  var pickUpMessage = 'Water';
+  var pickUPStyle = { font: 'bold 50px Acme', fill: '#fff'};
+  var pickUpText = game.add.text( 300,  100, pickUpMessage, pickUPStyle);
+  pickUpText.fixedToCamera = true;
+  game.add.tween(pickUpText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+  hasWater == true;
 
-    // Display tips to user
-    displayHelp: function(){
-    // Help text for player
-    var instructions = 'Collect 3 diamonds to open door';
-    var helpText_style = { font: 'bold 32px Acme', fill: '#fff'};
-    helpText = game.add.text(200, 100, instructions, helpText_style);
-    helpText.fixedToCamera = true;
-    game.add.tween(helpText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+},
 
-  }
+
+// Display tips to user
+displayHelp: function(){
+  // Help text for player
+  var instructions = 'Collect 3 diamonds to open door';
+  var helpText_style = { font: 'bold 32px Acme', fill: '#fff'};
+  helpText = game.add.text(200, 100, instructions, helpText_style);
+  helpText.fixedToCamera = true;
+  game.add.tween(helpText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+
+}
 };

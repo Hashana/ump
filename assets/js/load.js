@@ -12,7 +12,7 @@ var loadState = {
 
     // Load images
     game.load.image('ground', 'assets/images/platform.png');
-    //game.load.image('lock', 'assets/images/lock1.png')
+    game.load.image('waterBottle', 'assets/images/water.png')
 		game.load.image('diamond', 'assets/images/diamond.png');
     game.load.image('fire', 'assets/images/fire.png');
 
