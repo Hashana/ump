@@ -12,13 +12,14 @@ var loadState = {
 
     // Load images
     game.load.image('ground', 'assets/images/platform.png');
-    game.load.image('lock', 'assets/images/lock1.png')
+    //game.load.image('lock', 'assets/images/lock1.png')
 		game.load.image('diamond', 'assets/images/diamond.png');
     game.load.image('fire', 'assets/images/fire.png');
 
     //Load spritesheets
     game.load.spritesheet('dude', 'assets/images/dude.png', 32,48);
     game.load.spritesheet('door', 'assets/images/door.png', 63, 84);
+    game.load.spritesheet('lockedDoor', 'assets/images/LockedDoor.png', 63, 84);
     game.load.spritesheet('explosion', 'assets/images/explosion.png', 60,80);
 
     // Load background music

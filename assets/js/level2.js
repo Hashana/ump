@@ -21,7 +21,6 @@ var waterTiles = {};
 var bgSound;
 var sounds = {};
 var deathType;
-var locks;
 
 var level2State = {
   create: function(){
@@ -49,17 +48,10 @@ var level2State = {
     doorIsOpen = false;
 
     //Add door for win condition
-    door = game.add.sprite(4840, game.world.height - 279, 'door');
+    door = game.add.sprite(4840, game.world.height - 279, 'lockedDoor');
     game.physics.arcade.enable(door);
     door.body.immovable = true;
     door.animations.add('open', [0,1,2,3], 1, true);
-
-    // Add padlock to door
-    locks = game.add.group();
-    locks.enableBody = true;
-    var lock = locks.create(4870, game.world.height - 240, 'lock');
-
-
 
     // Add Player//add player
   	player = game.add.sprite(50, game.world.height - 98, 'dude');
@@ -81,7 +73,7 @@ var level2State = {
     bgSound = game.add.audio('music1');
     bgSound.loop = true;
     bgSound.play('');
-  
+
 
 
     // Add sound effects
@@ -152,15 +144,15 @@ var level2State = {
 
   // Player opens door
   openDoor: function(){
-    if(doorIsOpen == false && score >= 30)
+    if(doorIsOpen == false && score >= 100)
     {
       sounds.openDoorSfx.play();
       door.animations.play('open', 30, false);
       doorIsOpen = true;
     }
-    else {
+    else{
     this.displayHelp();
-    sounds.doorLockedSfx.play();
+    //sounds.doorLockedSfx.play();
     }
   },
   // Player goes through door if its open
@@ -174,6 +166,7 @@ var level2State = {
       }
     }
 },
+
 
     // Display tips to user
     displayHelp: function(){
