@@ -12,10 +12,12 @@ var loadState = {
 
     // Load images
     game.load.image('ground', 'assets/images/platform.png');
-    game.load.image('waterBottle', 'assets/images/water.png')
+    game.load.image('waterBottle', 'assets/images/water.png');
+    game.load.image('francium', 'assets/images/francium.png');
 		game.load.image('diamond', 'assets/images/diamond.png');
     game.load.image('fire', 'assets/images/fire.png');
     game.load.image('mixingStation', 'assets/images/mixingStation.png');
+    game.load.image('hci', 'assets/images/labBottle.png');
 
     //Load spritesheets
     game.load.spritesheet('dude', 'assets/images/dude.png', 32,48);
