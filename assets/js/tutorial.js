@@ -27,7 +27,7 @@ var tutorialState = {
 
 
     // Make text scroll up and off the screen
-    var storyTween = game.add.tween(text1).to({ y: -(this.game.height) }, 50000, Phaser.Easing.Linear.InOut, true);
+    var storyTween = game.add.tween(text1).to({ y: -(this.game.height) }, 48000, Phaser.Easing.Linear.InOut, true);
     //Provide instructions on how to proceed
     var instructionTween = game.add.tween(text2).to({alpha:1},2000, "Linear", true,48000);
     storyTween.chain(instructionTween);

@@ -107,14 +107,21 @@ function movePlayer(ice){
 
   //Player dies to combustionDeath
   function combustionDeath(){
-  var deathInfo = 'When your body touched the flame \n the potassium set on fire! \n You will continue to burn until you melt..';
+    deathText('When your body touched the flame \n the potassium set on fire! \n You will continue to burn until you melt..');
+  explosion(player);
+
+}
+
+//Generic death text method
+function deathText(text){
+  var deathInfo = text;
   var deathInfoText_style = { font: 'bold 32px Acme', fill: '#f00'};
   var deathText = game.add.text(200, 200, deathInfo, deathInfoText_style);
   deathText.fixedToCamera = true;
   game.add.tween(deathText).to({alpha: 0}, 10500, Phaser.Easing.Linear.None, true);
-  explosion(player);
-
 }
+
+
 
   //Instructions to player to end game
   function gameOverInstructions(){
@@ -130,11 +137,7 @@ function movePlayer(ice){
   //Player dies to water
   function waterDeath(sprite){
   if(sprite == player){
-    var waterDeathInfo = 'When your body touched the water \n the potassium in your body reacted \n with the oxygen! \n You will continue to burn until you melt..';
-    var waterDeathInfoText_style = { font: 'bold 32px Acme', fill: '#f00'};
-    var deathText = game.add.text(200, 200, waterDeathInfo, waterDeathInfoText_style);
-    deathText.fixedToCamera = true;
-    game.add.tween(waterDeathInfo).to({alpha: 0}, 10500, Phaser.Easing.Linear.None, true);
+    deathText('When your body touched the water \n the potassium in your body reacted \n with the oxygen! \n You will continue to burn until you melt..');
     explosion(player);
   }
   else {

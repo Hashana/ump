@@ -113,8 +113,8 @@ var level2State = {
     // Add Water bottle
     waterBottles = game.add.group()
     waterBottles.enableBody = true;
-    var waterbottle = waterBottles.create(3675, 539, 'waterBottle');
-    var waterBottle = waterBottles.create(1350, 539, 'waterBottle');
+    //var waterbottle = waterBottles.create(3675, 539, 'waterBottle');
+    var waterBottle = waterBottles.create(2352, 98, 'waterBottle');
     hasWater = false;
     // Add mixing station
     mixingStations = game.add.group()
@@ -128,7 +128,7 @@ var level2State = {
     // Add Hydrogen Chloride Gas
     hcis = game.add.group()
     hcis.enableBody = true;
-    var hci = hcis.create(100, game.world.height - 89, 'hci');
+    var hci = hcis.create(3675, 539, 'hci');
     hasHCI = false;
     hasAcid = false;
 
@@ -196,11 +196,20 @@ var level2State = {
 
   // Player opens door
   openDoor: function(){
-    if(doorIsOpen == false && score >= 100)
+    if(doorIsOpen == false && hasAcid == true)
     {
-      sounds.openDoorSfx.play();
-      door.animations.play('open', 30, false);
-      doorIsOpen = true;
+      this.pickUpMessage('Press E to use the Hydrochloric Acid');
+      if(interactKey.isDown)
+      {
+        this.pickUpMessage('The Hydrochloric Acid has eaten through the lock!');
+        sounds.openDoorSfx.play();
+        door.animations.play('open', 30, false);
+        doorIsOpen = true;
+      }
+      else{
+
+      }
+
     }
     else{
     this.displayHelp();
@@ -248,7 +257,7 @@ pickUpHCI: function(player, hci){
 
 pickUpMessage: function(text){
   var pickUpMessage = text;
-  var pickUPStyle = { font: 'bold 32px Acme', fill: '#fff'};
+  var pickUPStyle = { font: 'bold 32px Acme', fill: '#000'};
   var pickUpText = game.add.text( 200,  100, pickUpMessage, pickUPStyle);
   pickUpText.fixedToCamera = true;
   game.add.tween(pickUpText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
@@ -296,7 +305,7 @@ mixHci: function(){
   if(hasHCI == true && hasWater == true && isAtMStation == true && mixHciKey.isDown == true){
     hasAcid = true;
     hasHCI = false;
-    this.pickUpMessage('You have created Hydrochloric Acid (HCI)\ntry using this on the door! ');
+    this.pickUpMessage('\n\n\n\n\n\nYou have created Hydrochloric Acid (HCI)\ntry using this on the door! ');
   }
   else{
     // do not mix
@@ -305,7 +314,7 @@ mixHci: function(){
 
 mixFr: function(){
   if(hasFrancium == true && hasWater == true && isAtMStation == true && mixFrKey.isDown == true){
-    this.pickUpMessage('When you mixed the Fr with H20\nthere was a violent exothermic reaction\n\nYou have exploaded!');
+    deathText('When you mixed the Fr with H20\nthere was a violent exothermic reaction\n\nYou have exploaded!');
     explosion(player);
   }
   else{
