@@ -207,13 +207,13 @@ var level2State = {
         doorIsOpen = true;
       }
       else{
-
+        this.displayHelp();
+        //sounds.doorLockedSfx.play();
       }
 
     }
     else{
-    this.displayHelp();
-    //sounds.doorLockedSfx.play();
+      // door is open
     }
   },
   // Player goes through door if its open
@@ -260,7 +260,7 @@ pickUpMessage: function(text){
   var pickUPStyle = { font: 'bold 32px Acme', fill: '#000'};
   var pickUpText = game.add.text( 200,  100, pickUpMessage, pickUPStyle);
   pickUpText.fixedToCamera = true;
-  game.add.tween(pickUpText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+  game.add.tween(pickUpText).to({alpha: 0}, 2300, Phaser.Easing.Linear.None, true);
 },
 
 mixingStationInteraction: function(){
