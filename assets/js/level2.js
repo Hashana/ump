@@ -26,6 +26,10 @@ var hasWater;
 var hasFrancium;
 var hasHCI;
 var interactKey;
+var mixHciKey;
+var hasAcid;
+var isAtMStation;
+var mixFrKey;
 
 var level2State = {
   create: function(){
@@ -89,11 +93,20 @@ var level2State = {
     sounds.volume = 0.1;
 
     // Add controls for the game
+    // Adds cursor keys
   	cursors = game.input.keyboard.createCursorKeys();
+    // Add Q Key for help
     HelpKeyQ = game.input.keyboard.addKey(Phaser.Keyboard.Q);
     HelpKeyQ.onDown.add(this.displayHelp, this);
+    // Add E Key for Interactions
     interactKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
     interactKey.onDown.add(this.useMixingStation, this);
+    // Add H Key for mixing HCI acid & Water
+    mixHciKey = game.input.keyboard.addKey(Phaser.Keyboard.H);
+    mixHciKey.onDown.add(this.mixHci, this);
+    //Add F Key for mixing Fr & Water
+    mixFrKey = game.input.keyboard.addKey(Phaser.Keyboard.F);
+    mixFrKey.onDown.add(this.mixFr, this);
 
 
     // Add educational elements to level
@@ -101,6 +114,7 @@ var level2State = {
     waterBottles = game.add.group()
     waterBottles.enableBody = true;
     var waterbottle = waterBottles.create(3675, 539, 'waterBottle');
+    var waterBottle = waterBottles.create(1350, 539, 'waterBottle');
     hasWater = false;
     // Add mixing station
     mixingStations = game.add.group()
@@ -116,6 +130,7 @@ var level2State = {
     hcis.enableBody = true;
     var hci = hcis.create(100, game.world.height - 89, 'hci');
     hasHCI = false;
+    hasAcid = false;
 
 
     // Add collectables - diamonds
@@ -157,6 +172,7 @@ var level2State = {
     game.physics.arcade.collide(player, layer);
     game.physics.arcade.collide(diamonds, layer);
     game.physics.arcade.collide(fires, layer);
+    isAtMStation = false;
 
     // update player movement and check for actions
     updatePlayer();
@@ -239,34 +255,62 @@ pickUpMessage: function(text){
 },
 
 mixingStationInteraction: function(){
+  isAtMStation = true;
   if(interactKey.isDown){
     if(hasWater == true && hasFrancium == true && hasHCI == true){
-      this.pickUpMessage('You have Water (H2O), Francium(Fr) and Hydrogen Chloride gas(HCI)');
+      this.pickUpMessage('You have Water (H2O),\nFrancium(Fr) and \nHydrogen Chloride gas(HCI)\nPress H to mix HCI & water\nor F to mix Fr & water');
     }
     else if(hasWater == true && hasFrancium == true){
-      this.pickUpMessage('You have Water (H2O) & Francium(Fr)');
+      this.pickUpMessage('You have Water (H2O) & Francium(Fr)\nPress F to mix them');
     }
     else if(hasWater == true && hasHCI == true){
-      this.pickUpMessage('You have Water (H2O) & Hydrogen Chloride gas(HCI)');
+      this.pickUpMessage('You have Water (H2O) & Hydrogen Chloride gas(HCI)\nPress H to mix them');
+    }
+    else if(hasFrancium == true && hasHCI == true){
+      this.pickUpMessage('You have Francium(Fr) &\nHydrogen Chloride gas(HCI)\nFind more items to mix');
     }
     else if(hasFrancium == true){
-      this.pickUpMessage('You have Francium(Fr)');
+      this.pickUpMessage('You have Francium(Fr)\nFind more items to mix');
     }
     else if(hasWater == true){
-      this.pickUpMessage('You have Water(H20)');
+      this.pickUpMessage('You have Water(H20)\nFind more items to mix');
+    }
+    else if(hasHCI == true){
+      this.pickUpMessage('You have Hydrogen Chloride gas(HCI)\nFind more items to mix');
     }
     else{
-      this.pickUpMessage('You have nohing to mix');
+      this.pickUpMessage('You have nothing to mix\nFind items to mix');
     }
   }
   else{
-
+    // nothing happens as interaction key is not down.
   }
 
 },
 
 useMixingStation: function(){
 
+},
+
+mixHci: function(){
+  if(hasHCI == true && hasWater == true && isAtMStation == true && mixHciKey.isDown == true){
+    hasAcid = true;
+    hasHCI = false;
+    this.pickUpMessage('You have created Hydrochloric Acid (HCI)\ntry using this on the door! ');
+  }
+  else{
+    // do not mix
+  }
+},
+
+mixFr: function(){
+  if(hasFrancium == true && hasWater == true && isAtMStation == true && mixFrKey.isDown == true){
+    this.pickUpMessage('When you mixed the Fr with H20\nthere was a violent exothermic reaction\n\nYou have exploaded!');
+    explosion(player);
+  }
+  else{
+      // do not mix
+  }
 },
 
 
