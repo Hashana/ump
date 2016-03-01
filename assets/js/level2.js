@@ -4,7 +4,7 @@ var player;
 var platforms;
 var cursors;
 var diamonds;
-var score;
+//var score;
 var scoreText;
 var background;
 var fires;
@@ -33,27 +33,7 @@ var mixFrKey;
 
 var level2State = {
   create: function(){
-    game.stage.backgroundColor = '#7ec0ee';
-
-    // Add tiled map
-    map = game.add.tilemap('level1Map');
-    map.addTilesetImage('tileset1', 'tileset1');
-    // Identify the 3 water tiles, call waterDeath() on collision with player
-    // uncomment 3 lines below after debugging!!
-    waterTiles.One = map.setTileIndexCallback(1, waterDeath, this);
-    waterTiles.Two = map.setTileIndexCallback(2, waterDeath, this);
-    waterTiles.Three = map.setTileIndexCallback(3, waterDeath, this);
-    // Create map layer from tilemap layer
-    layer = map.createLayer('Tile Layer 1');
-    // resize world to fit map
-    layer.resizeWorld();
-    // Identify map tiles for player to collide with (stop player falling through floor)
-    map.setCollisionBetween(4, 16);
-
-
-
-    // set up level variables
-    score = 0;
+    CreateMap('level2Map');
     doorIsOpen = false;
 
     //Add door for win condition
@@ -63,34 +43,31 @@ var level2State = {
     door.animations.add('open', [0,1,2,3], 1, true);
 
     // Add Player//add player
-  	player = game.add.sprite(50, game.world.height - 98, 'dude');
-  	game.physics.arcade.enable(player);
-  	player.body.bounce.y = 0.2;
-  	player.body.gravity.y = 300;
-  	player.body.collideWorldBounds = true;
-    player.animations.add('left', [0,1,2,3], 10, true);
-  	player.animations.add('right', [5,6,7,8], 10, true);
-    // focus camera to stay with player
-    game.camera.follow(player);
+
+    setUpPlayer(50, game.world.height - 98);
+
     this.displayHelp();
 
     // Add score text
-    var scoreText_style = { font: 'bold 32px Acme', fill: '#fff'};
-    scoreText = game.add.text(16, 16, 'Score: ' + score, scoreText_style);
-    scoreText.fixedToCamera = true;
+    scoreText = CreateScoreText(score);
+    // var scoreText_style = { font: 'bold 32px Acme', fill: '#fff'};
+    // scoreText = game.add.text(16, 16, 'Score: ' + score, scoreText_style);
+    // scoreText.fixedToCamera = true;
 
     // Background sound  on a loop
-    bgSound = game.add.audio('music1');
-    bgSound.loop = true;
-    bgSound.play('');
+    // bgSound = game.add.audio('music1');
+    // bgSound.loop = true;
+    // bgSound.play('');
 
     // Add sound effects
-    sounds.openDoorSfx = game.add.audio('openDoor');
-    sounds.explosionSfx = game.add.audio('explosion');
-    sounds.jumpSfx = game.add.audio('jump');
-    sounds.pickUpSfx = game.add.audio('pickup');
-    sounds.doorLockedSfx = game.add.audio('doorLocked');
-    sounds.volume = 0.1;
+    bgSound = SetUpMusic('music1');
+    SetUpSounds();
+    // sounds.openDoorSfx = game.add.audio('openDoor');
+    // sounds.explosionSfx = game.add.audio('explosion');
+    // sounds.jumpSfx = game.add.audio('jump');
+    // sounds.pickUpSfx = game.add.audio('pickup');
+    // sounds.doorLockedSfx = game.add.audio('doorLocked');
+    // sounds.volume = 0.1;
 
     // Add controls for the game
     // Adds cursor keys

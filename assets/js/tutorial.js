@@ -36,7 +36,7 @@ var tutorialState = {
 
   // Start the game
   start: function() {
-      this.game.state.start('level2');
+      this.game.state.start('level1');
 },
 
 // Repeat this state from the beginning

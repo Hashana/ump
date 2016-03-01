@@ -4,14 +4,26 @@ var isMoving;
 var tile;
 var slideSpeed;
 
+function setUpPlayer(width, height){
+  player = game.add.sprite(width, height, 'dude');
+  game.physics.arcade.enable(player);
+  player.body.bounce.y = 0.2;
+  player.body.gravity.y = 300;
+  player.body.collideWorldBounds = true;
+  player.animations.add('left', [0,1,2,3], 10, true);
+  player.animations.add('right', [5,6,7,8], 10, true);
+  game.camera.follow(player);
+}
 
 function updatePlayer(ice){
-//  decideMovement();
+
   movePlayer(ice);
   // check for overlap of player and diamond - calls collectdDiamond function if found
   game.physics.arcade.overlap(player, diamonds, this.collectDiamond, null, this);
   // Player explosion upon fire death
   game.physics.arcade.overlap(player, fires, this.combustionDeath, null, this);
+  //Player water death
+  game.physics.arcade.overlap(player, waterTiles, this.waterDeath, null, this);
 
 }
 

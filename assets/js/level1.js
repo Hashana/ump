@@ -1,3 +1,5 @@
+var map;
+var layer;
 var player;
 var platforms;
 var cursors;
@@ -15,221 +17,227 @@ var HelpKeyQ;
 var helpText;
 var deathText;
 var textAlert;
+var waterTiles = {};
+var bgSound;
+var sounds = {};
+var deathType;
 var sounds = {};
 
-var level1State = {
-  create: function() {
-    score = 0;
-    doorIsOpen = false;
+ var level1State = {
+   create: function(){
+     CreateMap('level1Map');
+     InitialiseGameObjects();
+     // set score to 0
+     score = 0;
 
-    game.world.setBounds(0, 0, 2000, 600);
+     //Add door for win condition
+      CreateDoor(4791, 160);
+      CreateDoor(100, game.world.height -160);
+      doorIsOpen = false;
 
-    // set background colour
-    game.stage.backgroundColor = 0xbada55;
+      //Add player
+      setUpPlayer(50, game.world.height - 98);
+      this.displayHelp();
 
-  	// add platforms
-  	platforms = game.add.group();
-  	// enable physics for group
-  	platforms.enableBody = true;
+     // Add score text
+     scoreText = CreateScoreText(score);
 
-  	// create the ground
-  	var ground = platforms.create(0, game.world.height - 64, 'ground');
-  	// fit the width of the game
-  	ground.scale.setTo(100,2);
-  	// stop it from moving when colliding with the player
-  	ground.body.immovable = true;
+     // Add sound effects
+     bgSound = SetUpMusic('music2');
+     SetUpSounds();
 
-    // create ledges for level
-  	var ledge = platforms.create(400,400, 'ground');
-  	ledge.body.immovable = true;
-  	ledge = platforms.create(-150, 250, 'ground');
-  	ledge.body.immovable = true
-    ledge = platforms.create(600, 250, 'ground');
-  	ledge.body.immovable = true;
-    ledge = platforms.create(900, 250, 'ground');
-    ledge.body.immovable = true;
-    ledge = platforms.create(1400, 250, 'ground');
-    ledge.body.immovable = true;
-
-    //Add door for win condition
-    door = game.add.sprite(1800, game.world.height - 150, 'door');
-    game.physics.arcade.enable(door);
-    door.body.immovable = true;
-    door.animations.add('open', [0,1,2,3], 1, true);
-
-
-    //add player
-  	player = game.add.sprite(400, game.world.height - 150, 'dude');
-  	game.physics.arcade.enable(player);
-  	player.body.bounce.y = 0.2;
-  	player.body.gravity.y = 300;
-  	player.body.collideWorldBounds = true;
-    player.animations.add('left', [0,1,2,3], 10, true);
-  	player.animations.add('right', [5,6,7,8], 10, true);
-    game.camera.follow(player);
+     // Add controls for the game
+     // Adds cursor keys
+     CreateGameControls();
+     // Add Q Key for help
+     HelpKeyQ = game.input.keyboard.addKey(Phaser.Keyboard.Q);
+     HelpKeyQ.onDown.add(this.displayHelp, this);
+     // Add E Key for Interactions
+     //interactKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
+    // interactKey.onDown.add(this.useMixingStation, this);
+     // Add H Key for mixing HCI acid & Water
+     //mixHciKey = game.input.keyboard.addKey(Phaser.Keyboard.H);
+    // mixHciKey.onDown.add(this.mixHci, this);
+    //Add F Key for mixing Fr & Water
+    // mixFrKey = game.input.keyboard.addKey(Phaser.Keyboard.F);
+    // mixFrKey.onDown.add(this.mixFr, this);
 
 
+     // Add educational elements to level
+     //Add Mixing Station
+     CreateMixingStation(4508, game.world.height - 100);
+     // Add Water
+     CreateWater(2352, 98);
+     hasWater = false;
 
-    // Add controls for the game
-  	cursors = game.input.keyboard.createCursorKeys();
-    HelpKeyQ = game.input.keyboard.addKey(Phaser.Keyboard.Q);
-    HelpKeyQ.onDown.add(this.displayHelp, this);
+     // Add Francium (Red herring)
+     CreateFrancium(589, game.world.height - 78);
+     hasFrancium = false;
+     // Add collectables - diamonds
+     CreateDiamonds(20);
+     // create 15 fires to avoid
+     CreateFires(15)
+   },
 
-    // Add collectables - diamonds
-  	diamonds = game.add.group();
-  	diamonds.enableBody = true;
+   update: function(){
+     // stop player and collectables falling through the map.
+     UpdateCollision(player, layer, diamonds, fires);
+     // update player movement and check for actions
+     updatePlayer();
+     isAtMStation = false;
 
-  	//create 6 diamonds evenly spaced
-  	for (var i = 0; i < 6; i++)
-  	{
-  		//create a diamond in the diamonds group
-  		var diamond = diamonds.create(i * 350,0,'diamond')
-  		//Add gravity
-  		diamond.body.gravity.y = 600;
-  		//Give diamond a random bounce value
-  		diamond.body.bounce.y = 0.7 + Math.random();
-  	}
+     // Player opens door
+     game.physics.arcade.overlap(player, door, this.openDoor, null, this);
 
-    // create fire to avoid
-    fires = game.add.group();
-    fires.enableBody = true;
-
-    //create 12 fires evenly spaced
-  	for (var i = 0; i < 12; i++)
-  	{
-  		//create a fire in the fires group
-  		var fire = fires.create(i * 250,0,'fire');
-  		//Add gravity
-  		fire.body.gravity.y = 400;
-
-  		//Give fires a bounce value
-  		fire.body.bounce.y = 0.7;
-  	}
-
-    // Add score text
-    var scoreText_style = { font: 'bold 32px Acme', fill: '#fff'};
-  	scoreText = game.add.text(16, 16, 'Score: ' + score, scoreText_style);
-    scoreText.fixedToCamera = true;
-
-    // Add sound effects
-    sounds.openDoorSfx = game.add.audio('openDoor');
-    sounds.explosionSfx = game.add.audio('explosion');
-    sounds.jumpSfx = game.add.audio('jump');
-
-},
-
-   update: function() {
-  	// Player collides with the ground and doesn't fall through it
-  	game.physics.arcade.collide(player, platforms);
-
-  	 updatePlayer();
-
-     //stop diamonds falling through the ground
-  	 game.physics.arcade.collide(diamonds, platforms);
-     // Stop fire falling through the ground
-     game.physics.arcade.collide(fires, platforms);
-
-  	 // check for overlap of player and diamond - calls collectdDiamond function if found
-  	 game.physics.arcade.overlap(player, diamonds, this.collectDiamond, null, this);
-
-     // Player explosion upon death
-    game.physics.arcade.overlap(player, fires, this.explosion, null, this);
-
-    // Player opens door
-    game.physics.arcade.overlap(player, door, this.openDoor, null, this);
-
-    //Player goes through door.
-    game.physics.arcade.overlap(player, door, this.completeLevel,null, this);
+     //Player goes through door.
+     game.physics.arcade.overlap(player, door, this.completeLevel,null, this);
+     // //Player collects water
+     game.physics.arcade.overlap(player, waterBottles, this.pickUpWater, null, this);
+     //Player is asked to interact with the mixing station
+    game.physics.arcade.overlap(player, mixingStations, this.mixingStationInteraction, null, this);
+    // Player collects francium
+    //game.physics.arcade.overlap(player, franciums, this.pickUpFrancium, null, this);
+    game.physics.arcade.overlap(player, franciums, this.collectItem, null, this);
 
 
-  },
+   },
 
- collectDiamond: function(player, diamond){
-  	//remove diamond from the screen
-  	diamond.kill();
+   // Player opens door
+   openDoor: function(){
+     if(doorIsOpen == false)
+     {
+         sounds.openDoorSfx.play();
+         door.animations.play('open', 30, false);
+         doorIsOpen = true;
+     }
+     else{
+       // door is open
+     }
+   },
+   // Player goes through door if its open
+   completeLevel: function(){
+     if(doorIsOpen == true)
+     {
+       if(cursors.up.isDown)
+       {
+         bgSound.stop('');
+         this.game.state.start('level2');
+       }
+     }
+ },
 
-  	//Add and update diamond
-  	score += 10;
-  	scoreText.text = 'Score: ' + score;
-},
+ pickUpWater: function(player, waterBottle){
+   //remove water from the screen
+   waterBottle.kill();
+   sounds.pickUpSfx.play();
+   this.pickUpMessage('      Water');
+   hasWater = true;
+
+ },
+
+ collectItem: function(player, image){
+   image.kill();
+   sounds.pickUpSfx.play();
+   if(image.parent == franciums){;
+     PickUpMessage('          Francium');
+     hasFrancium == true;
+   }
+   else if(image.parent == waterBottles){
+       PickUpMessage('          Water');
+       hasWater = true;
+     }
+ },
+
+ // pickUpFrancium: function(player, francium){
+ //   //remove diamond from the screen
+ //   francium.kill();
+ //   sounds.pickUpSfx.play();
+ //   this.pickUpMessage('      Francium');
+ //   hasFrancium = true;
+ //
+ // },
+
+ // pickUpHCI: function(player, hci){
+ //   //remove diamond from the screen
+ //   hci.kill();
+ //   sounds.pickUpSfx.play();
+ //   this.pickUpMessage('Hydrogen Chloride Gas (HCI)');
+ //   hasHCI = true;
+ //
+ // },
+
+ // pickUpMessage: function(text){
+ //   var pickUpMessage = text;
+ //   var pickUPStyle = { font: 'bold 32px Acme', fill: '#000'};
+ //   var pickUpText = game.add.text( 200,  100, pickUpMessage, pickUPStyle);
+ //   pickUpText.fixedToCamera = true;
+ //   game.add.tween(pickUpText).to({alpha: 0}, 2300, Phaser.Easing.Linear.None, true);
+ // },
+
+ // mixingStationInteraction: function(){
+ //   isAtMStation = true;
+ //   if(interactKey.isDown){
+ //     if(hasWater == true && hasFrancium == true && hasHCI == true){
+ //       this.pickUpMessage('You have Water (H2O),\nFrancium(Fr) and \nHydrogen Chloride gas(HCI)\nPress H to mix HCI & water\nor F to mix Fr & water');
+ //     }
+ //     else if(hasWater == true && hasFrancium == true){
+ //       this.pickUpMessage('You have Water (H2O) & Francium(Fr)\nPress F to mix them');
+ //     }
+ //     else if(hasWater == true && hasHCI == true){
+ //       this.pickUpMessage('You have Water (H2O) & Hydrogen Chloride gas(HCI)\nPress H to mix them');
+ //     }
+ //     else if(hasFrancium == true && hasHCI == true){
+ //       this.pickUpMessage('You have Francium(Fr) &\nHydrogen Chloride gas(HCI)\nFind more items to mix');
+ //     }
+ //     else if(hasFrancium == true){
+ //       this.pickUpMessage('You have Francium(Fr)\nFind more items to mix');
+ //     }
+ //     else if(hasWater == true){
+ //       this.pickUpMessage('You have Water(H20)\nFind more items to mix');
+ //     }
+ //     else if(hasHCI == true){
+ //       this.pickUpMessage('You have Hydrogen Chloride gas(HCI)\nFind more items to mix');
+ //     }
+ //     else{
+ //       this.pickUpMessage('You have nothing to mix\nFind items to mix');
+ //     }
+ //   }
+ //   else{
+ //     // nothing happens as interaction key is not down.
+ //   }
+ //
+ // },
+ //
+ // useMixingStation: function(){
+ //
+ // },
+
+ // mixHci: function(){
+ //   if(hasHCI == true && hasWater == true && isAtMStation == true && mixHciKey.isDown == true){
+ //     hasAcid = true;
+ //     hasHCI = false;
+ //     this.pickUpMessage('\n\n\n\n\n\nYou have created Hydrochloric Acid (HCI)\ntry using this on the door! ');
+ //   }
+ //   else{
+ //     // do not mix
+ //   }
+ // },
+ //
+ // mixFr: function(){
+ //   if(hasFrancium == true && hasWater == true && isAtMStation == true && mixFrKey.isDown == true){
+ //     deathText('When you mixed the Fr with H20\nthere was a violent exothermic reaction\n\nYou have exploaded!');
+ //     explosion(player);
+ //   }
+ //   else{
+ //       // do not mix
+ //   }
+ // },
 
 
-explosion: function(player){
-  // remove player sprite
-  player.kill();
-  //Add sound effect
-  sounds.explosionSfx.play();
-  // Add explosion for death animation
-  explosion = this.game.add.sprite(player.body.x, player.body.y, 'explosion');
-  explosion.anchor.setTo(0.5,0.5);
-  explosion.animations.add ('explode',[0,1,2,3], 10 ,true);
-  explosion.animations.play("explode", 10, false);
-  this.combustionDeath();
+ // Display tips to user
+ displayHelp: function(){
+   // Help text for player
+   PickUpMessage('Press E to interact \nwith the mixing station\n you need a way to\nreach the door!');
+ }
 
-},
-
-// If player loses game
-endGame: function(){
-
-    this.game.state.start('gameOver');
-},
-
-// Player opens door
-openDoor: function(){
-  if(doorIsOpen == false && score >= 30)
-  {
-    sounds.openDoorSfx.play();
-    door.animations.play('open', 30, false);
-    doorIsOpen = true;
-  }
-  else {
-  this.displayHelp();
-  }
-},
-
-//Player dies to combustionDeath
-combustionDeath: function(){
-  var deathInfo = 'When your body touched the flame \n the potassium set on fire! \n You will continue to burn until you melt..';
-  var deathInfoText_style = { font: 'bold 32px Acme', fill: '#f00'};
-  deathText = game.add.text(200, 200, deathInfo, deathInfoText_style);
-  deathText.fixedToCamera = true;
-  game.add.tween(deathText).to({alpha: 0}, 10500, Phaser.Easing.Linear.None, true);
-  this.gameOverInstructions();
-
-},
-
-//Instructions to player to end game
-gameOverInstructions: function(){
-  // Instruct player to end game
-  var textInfo = 'Press Space to continue';
-  var textInfo_style = {font:'bold 32px Acme', fill: '#000'};
-  textAlert = game.add.text(250, 400, textInfo, textInfo_style);
-  textAlert.fixedToCamera = true;
-  var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-  space_key.onDown.add(this.endGame, this);
-},
-
-// Player goes through door if its open
-completeLevel: function(){
-  if(doorIsOpen == true)
-  {
-    if(cursors.up.isDown)
-    {
-      this.game.state.start('level2');
-    }
-  }
-
-},
-
-  // Display tips to user
-displayHelp: function(){
-    // Help text for player
-    var instructions = 'Collect 3 diamonds to open door';
-    var helpText_style = { font: 'bold 32px Acme', fill: '#fff'};
-    helpText = game.add.text(200, 100, instructions, helpText_style);
-    helpText.fixedToCamera = true;
-    game.add.tween(helpText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
-
-}
-// end state
-};
+ };
