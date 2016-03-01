@@ -26,6 +26,7 @@ var hasFrancium;
 var hasWater;
 var hasMercury;
 var hasAsh;
+var isOnPlatform;
 
  var level1State = {
    create: function(){
@@ -33,6 +34,7 @@ var hasAsh;
      InitialiseGameObjects();
      // set score to 0
      score = 0;
+     isOnPlatform = false;
 
      //Add door for win condition
       CreateDoor(4791, 160);
@@ -52,7 +54,8 @@ var hasAsh;
 
      // Add controls for the game
      // Adds cursor keys
-     CreateGameControls();
+     //CreateGameControls();
+     cursors = game.input.keyboard.createCursorKeys();
      // Add Q Key for help
      HelpKeyQ = game.input.keyboard.addKey(Phaser.Keyboard.Q);
      HelpKeyQ.onDown.add(this.displayHelp, this);
@@ -73,10 +76,7 @@ var hasAsh;
     fillKey.onDown.add(this.fillUrn, this)
 
     CreatePlatform(50, game.world.height - 150);
-    CreatePlatform(game.world.width - 441, game.world.height - 150);
-    CreatePlatform(game.world.width - 541, game.world.height - 250);
-    CreatePlatform(game.world.width - 441, game.world.height - 350);
-    CreatePlatform(game.world.width - 441, game.world.height - 450);
+
 
      // Add educational elements to level
      //Add Mixing Station
@@ -103,6 +103,9 @@ var hasAsh;
 },
 
 update: function(){
+
+    console.log(isOnPlatform);
+
      UpdateCollision(player, layer, diamonds, fires);
      // update player movement and check for actions
      updatePlayer();
@@ -123,8 +126,7 @@ update: function(){
     // Player collects francium
     game.physics.arcade.overlap(player, franciums, this.collectItem, null, this);
 
-
-   },
+},
 
    // Player opens door
    openDoor: function(){

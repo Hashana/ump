@@ -59,6 +59,7 @@ function CreateFrancium(width, height){
 function CreatePlatform(width, height){
   var platform = platforms.create(width, height, 'ground');
   platform.body.immovable = true;
+  return platform;
 }
 
 function CreateUrn(width, height){
