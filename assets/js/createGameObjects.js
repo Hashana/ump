@@ -42,11 +42,31 @@ function InitialiseGameObjects(){
   mixingStations.enableBody = true;
   waterBottles = game.add.group()
   waterBottles.enableBody = true;
+  mercurys = game.add.group()
+  mercurys.enableBody = true;
+  urns = game.add.group();
+  urns.enableBody = true;
+  platforms = game.add.group()
+  platforms.enableBody = true;
+  platforms.physicsBodyType = Phaser.Physics.ARCADE;
+
 }
 
 function CreateFrancium(width, height){
   var francium = franciums.create(width, height, 'francium');
+}
 
+function CreatePlatform(width, height){
+  var platform = platforms.create(width, height, 'ground');
+  platform.body.immovable = true;
+}
+
+function CreateUrn(width, height){
+  var urn = urns.create(width, height, 'urn');
+}
+
+function CreateMercury(width, height){
+  var mercury = mercurys.create(width, height, 'mercury');
 }
 
 function CreateMixingStation(width, height){

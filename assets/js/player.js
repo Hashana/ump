@@ -84,8 +84,7 @@ function movePlayer(ice){
 
    if (cursors.up.isDown){
       // Checks player is touching the floor before jumping
-      if (player.body.onFloor())
-      {
+      if (player.body.onFloor()){
           player.body.velocity.y = -350;
           sounds.jumpSfx.play();
       }
