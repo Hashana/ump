@@ -75,9 +75,6 @@ var isOnPlatform;
     fillKey = game.input.keyboard.addKey(Phaser.Keyboard.U);
     fillKey.onDown.add(this.fillUrn, this)
 
-    CreatePlatform(50, game.world.height - 150);
-
-
      // Add educational elements to level
      //Add Mixing Station
      CreateMixingStation(4508, game.world.height - 100);
@@ -237,10 +234,11 @@ update: function(){
 // fill urn to access platforms once ash has been gathered.
  fillUrn: function(){
    if(hasAsh == true && fillKey.isDown == true){
-     CreatePlatform(game.world.width - 441, game.world.height - 150);
-     CreatePlatform(game.world.width - 541, game.world.height - 250);
-     CreatePlatform(game.world.width - 441, game.world.height - 350);
-     CreatePlatform(game.world.width - 441, game.world.height - 450);
+     platformX = CreatePlatform(game.world.width - 441, game.world.height - 49);
+      game.add.tween(platformX.body).to({ y: '-700' }, 8000,Phaser.Easing.Linear.None).to({y:'+700'}, 2000,Phaser.Easing.Linear.None).yoyo().loop().start();
+    //  CreatePlatform(game.world.width - 541, game.world.height - 250);
+    //  CreatePlatform(game.world.width - 441, game.world.height - 350);
+    //  CreatePlatform(game.world.width - 441, game.world.height - 450);
    }
  },
 
