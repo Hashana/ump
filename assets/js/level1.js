@@ -34,10 +34,9 @@ var isOnPlatform;
      InitialiseGameObjects();
      // set score to 0
      score = 0;
-     isOnPlatform = false;
 
      //Add door for win condition
-      CreateDoor(4791, 160);
+      CreateDoor(4791, 160, 'door');
     //  CreateDoor(100, game.world.height -160);
       doorIsOpen = false;
 

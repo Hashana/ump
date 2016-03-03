@@ -3,20 +3,24 @@ var sounds = {};
 var icyTile;
 var tiles;
 var icyTiles;
+var doorIsOpen;
 
 var level3State = {
   create: function(){
     CreateMap('level3Map');
+    InitialiseGameObjects();
+    this.displayHelp();
+    doorIsOpen = false;
 
+    //Add door for win condition
+    CreateDoor(game.world.width - 147, game.world.height - 673 , 'door')
 
     HelpKeyQ = game.input.keyboard.addKey(Phaser.Keyboard.Q);
     HelpKeyQ.onDown.add(this.displayHelp, this);
 
 
-    // Add Player//add player
-
     setUpPlayer(50, game.world.height - 150);
-
+    scoreText = CreateScoreText(score);
 
     // Add controls for the game
     cursors = game.input.keyboard.createCursorKeys();
@@ -26,16 +30,18 @@ var level3State = {
     // Add sound effects
     SetUpSounds();
 
-    // Add score text
-    var scoreText_style = { font: 'bold 32px Acme', fill: '#fff'};
-    scoreText = game.add.text(16, 16, 'Score: ' + score, scoreText_style);
-    scoreText.fixedToCamera = true;
+    //CreateFires(10);
+    CreateDiamonds(25);
 
 },
 
 update: function(){
   // stop player and collectables falling through the ground.
-  game.physics.arcade.collide(player, layer);
+  UpdateCollision(player, layer, diamonds, fires);
+  // Player opens door
+  game.physics.arcade.overlap(player, door, this.openDoor, null, this);
+  //Player goes through door.
+  game.physics.arcade.overlap(player, door, this.completeLevel,null, this);
 
   // check if player is on ice to call slide movement if required
   // pass isOnIce variable to updatePlayer()
@@ -58,13 +64,31 @@ update: function(){
 
 // Display tips to user
 displayHelp: function(){
-  // Help text for player
-  var returnValue = map.getTile(player.body.x, player.body.y, 'Tile Layer 1', false);
-  var helpText_style = { font: 'bold 32px Acme', fill: '#fff'};
-  helpText = game.add.text(200, 100, returnValue, helpText_style);
-  helpText.fixedToCamera = true;
-  game.add.tween(helpText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+PickUpMessage('Reach the door, watch your step!');
 
 },
 
+// Player opens door
+openDoor: function(){
+  if(doorIsOpen == false)
+  {
+      sounds.openDoorSfx.play();
+      door.animations.play('open', 30, false);
+      doorIsOpen = true;
+  }
+  else{
+    // door is open
+  }
+},
+// Player goes through door if its open
+completeLevel: function(){
+  if(doorIsOpen == true)
+  {
+    if(cursors.up.isDown)
+    {
+      bgSound.stop('');
+      this.game.state.start('win');
+    }
+  }
+}
 };

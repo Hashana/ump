@@ -46,6 +46,8 @@ function InitialiseGameObjects(){
   mercurys.enableBody = true;
   urns = game.add.group();
   urns.enableBody = true;
+  hcis = game.add.group();
+  hcis.enableBody = true;
   platforms = game.add.group()
   platforms.enableBody = true;
   platforms.physicsBodyType = Phaser.Physics.ARCADE;
@@ -64,6 +66,10 @@ function CreatePlatform(width, height){
 
 }
 
+function CreateHci(width, height){
+  var hci = hcis.create(width, height, 'hci');
+}
+
 function CreateUrn(width, height){
   var urn = urns.create(width, height, 'urn');
 }
@@ -80,8 +86,8 @@ function CreateWater(width, height){
   var waterBottle = waterBottles.create(width,height, 'waterBottle');
 }
 
-function CreateDoor(width, height){
-  door = game.add.sprite(width, height, 'door');
+function CreateDoor(width, height, sprite){
+  door = game.add.sprite(width, height, sprite);
   game.physics.arcade.enable(door);
   door.body.immovable = true;
   door.animations.add('open', [0,1,2,3], 1, true);

@@ -34,13 +34,10 @@ var mixFrKey;
 var level2State = {
   create: function(){
     CreateMap('level2Map');
-    doorIsOpen = false;
-
+      InitialiseGameObjects();
     //Add door for win condition
-    door = game.add.sprite(4840, game.world.height - 279, 'lockedDoor');
-    game.physics.arcade.enable(door);
-    door.body.immovable = true;
-    door.animations.add('open', [0,1,2,3], 1, true);
+    CreateDoor(4840, game.world.height - 279, 'lockedDoor')
+    doorIsOpen = false;
 
     // Add Player//add player
 
@@ -50,24 +47,10 @@ var level2State = {
 
     // Add score text
     scoreText = CreateScoreText(score);
-    // var scoreText_style = { font: 'bold 32px Acme', fill: '#fff'};
-    // scoreText = game.add.text(16, 16, 'Score: ' + score, scoreText_style);
-    // scoreText.fixedToCamera = true;
-
-    // Background sound  on a loop
-    // bgSound = game.add.audio('music1');
-    // bgSound.loop = true;
-    // bgSound.play('');
 
     // Add sound effects
     bgSound = SetUpMusic('music1');
     SetUpSounds();
-    // sounds.openDoorSfx = game.add.audio('openDoor');
-    // sounds.explosionSfx = game.add.audio('explosion');
-    // sounds.jumpSfx = game.add.audio('jump');
-    // sounds.pickUpSfx = game.add.audio('pickup');
-    // sounds.doorLockedSfx = game.add.audio('doorLocked');
-    // sounds.volume = 0.1;
 
     // Add controls for the game
     // Adds cursor keys
@@ -88,60 +71,23 @@ var level2State = {
 
     // Add educational elements to level
     // Add Water bottle
-    waterBottles = game.add.group()
-    waterBottles.enableBody = true;
-    //var waterbottle = waterBottles.create(3675, 539, 'waterBottle');
-    var waterBottle = waterBottles.create(2352, 98, 'waterBottle');
+    CreateWater(2352, 98);
     hasWater = false;
     // Add mixing station
-    mixingStations = game.add.group()
-    mixingStations.enableBody = true;
-    var mixingStation = mixingStations.create(1300, 539, 'mixingStation');
+    CreateMixingStation(1300, 539);
     // Add Francium (Red herring)
-    franciums = game.add.group()
-    franciums.enableBody = true;
-    var francium = franciums.create(560, game.world.height - 170, 'francium');
+    CreateFrancium(560, game.world.height - 170);
     hasFrancium = false;
     // Add Hydrogen Chloride Gas
-    hcis = game.add.group()
-    hcis.enableBody = true;
-    var hci = hcis.create(3675, 539, 'hci');
+    CreateHci(3675, 539);
     hasHCI = false;
     hasAcid = false;
 
 
     // Add collectables - diamonds
-  	diamonds = game.add.group();
-  	diamonds.enableBody = true;
-  	//create 12 diamonds evenly spaced
-  	for (var i = 0; i < 12; i++)
-  	{
-  		//create a diamond in the diamonds group
-  		var diamond = diamonds.create(i * 350,10,'diamond')
-  		//Add gravity
-  		diamond.body.gravity.y = 600;
-  		//Give diamond a random bounce value
-  		diamond.body.bounce.set(1);
-      diamond.collideWorldBounds = true;
-      diamond.body.immovable = true;
-
-  	}
-
-    // create fire to avoid
-    fires = game.add.group();
-    fires.enableBody = true;
-    //create 20 fires evenly spaced
-  	for (var i = 0; i < 20; i++)
-  	{
-  		//create a fire in the fires group
-  		var fire = fires.create(i * 250 + 10,100,'fire');
-  		//Add gravity
-  		fire.body.gravity.y = 400;
-
-  		//Give fires a bounce value
-  		fire.body.bounce.y = 0.7;
-  	}
-
+    CreateDiamonds(25);
+    // create fires to avoid
+    CreateFires(20);
   },
 
   update: function(){
@@ -162,29 +108,29 @@ var level2State = {
    //Player water death
    game.physics.arcade.overlap(player, waterTiles, this.waterDeath, null, this);
    //Player collects water
-   game.physics.arcade.overlap(player, waterBottles, this.pickUpWater, null, this);
+   game.physics.arcade.overlap(player, waterBottles, this.collectItem, null, this);
    //Player is asked to interact with the mixing station
    game.physics.arcade.overlap(player, mixingStations, this.mixingStationInteraction, null, this);
    // Player collects francium
-   game.physics.arcade.overlap(player, franciums, this.pickUpFrancium, null, this);
+   game.physics.arcade.overlap(player, franciums, this.collectItem, null, this);
    // player collects hci
-   game.physics.arcade.overlap(player, hcis, this.pickUpHCI, null, this);
+   game.physics.arcade.overlap(player, hcis, this.collectItem, null, this);
   },
 
   // Player opens door
   openDoor: function(){
     if(doorIsOpen == false && hasAcid == true)
     {
-      this.pickUpMessage('Press E to use the Hydrochloric Acid');
+      PickUpMessage('Press E to use the Hydrochloric Acid');
       if(interactKey.isDown)
       {
-        this.pickUpMessage('The Hydrochloric Acid has eaten through the lock!');
+        PickUpMessage('\n\nThe Hydrochloric Acid has eaten through the lock!');
         sounds.openDoorSfx.play();
         door.animations.play('open', 30, false);
         doorIsOpen = true;
       }
       else{
-        this.displayHelp();
+      //  this.displayHelp();
         //sounds.doorLockedSfx.play();
       }
 
@@ -205,67 +151,52 @@ var level2State = {
     }
 },
 
-pickUpWater: function(player, waterBottle){
-  //remove diamond from the screen
-  waterBottle.kill();
+
+collectItem: function(player, image){
+  image.kill();
   sounds.pickUpSfx.play();
-  this.pickUpMessage('      Water');
-  hasWater = true;
+  if(image.parent == franciums){
+    hasFrancium = true;
+    PickUpMessage('          Francium');
 
+  }
+  else if(image.parent == waterBottles){
+      PickUpMessage('          Water');
+      hasWater = true;
+    }
+    else if(image.parent == hcis){
+        PickUpMessage('Hydrogen Chloride Gas (HCI)');
+        hasHCI = true;
+      }
 },
 
-pickUpFrancium: function(player, francium){
-  //remove diamond from the screen
-  francium.kill();
-  sounds.pickUpSfx.play();
-  this.pickUpMessage('      Francium');
-  hasFrancium = true;
-
-},
-
-pickUpHCI: function(player, hci){
-  //remove diamond from the screen
-  hci.kill();
-  sounds.pickUpSfx.play();
-  this.pickUpMessage('Hydrogen Chloride Gas (HCI)');
-  hasHCI = true;
-
-},
-
-pickUpMessage: function(text){
-  var pickUpMessage = text;
-  var pickUPStyle = { font: 'bold 32px Acme', fill: '#000'};
-  var pickUpText = game.add.text( 200,  100, pickUpMessage, pickUPStyle);
-  pickUpText.fixedToCamera = true;
-  game.add.tween(pickUpText).to({alpha: 0}, 2300, Phaser.Easing.Linear.None, true);
-},
 
 mixingStationInteraction: function(){
   isAtMStation = true;
   if(interactKey.isDown){
     if(hasWater == true && hasFrancium == true && hasHCI == true){
-      this.pickUpMessage('You have Water (H2O),\nFrancium(Fr) and \nHydrogen Chloride gas(HCI)\nPress H to mix HCI & water\nor F to mix Fr & water');
+      PickUpMessage('You have Water (H2O),\nFrancium(Fr) and \nHydrogen Chloride gas(HCI)\nPress H to mix HCI & water\nor F to mix Fr & water');
     }
     else if(hasWater == true && hasFrancium == true){
-      this.pickUpMessage('You have Water (H2O) & Francium(Fr)\nPress F to mix them');
+      PickUpMessage('You have Water (H2O) & Francium(Fr)\nPress F to mix them');
     }
     else if(hasWater == true && hasHCI == true){
-      this.pickUpMessage('You have Water (H2O) & Hydrogen Chloride gas(HCI)\nPress H to mix them');
+      PickUpMessage('You have Water (H2O) & Hydrogen Chloride gas(HCI)\nPress H to mix them');
     }
     else if(hasFrancium == true && hasHCI == true){
-      this.pickUpMessage('You have Francium(Fr) &\nHydrogen Chloride gas(HCI)\nFind more items to mix');
+      PickUpMessage('You have Francium(Fr) &\nHydrogen Chloride gas(HCI)\nFind more items to mix');
     }
     else if(hasFrancium == true){
-      this.pickUpMessage('You have Francium(Fr)\nFind more items to mix');
+      PickUpMessage('You have Francium(Fr)\nFind more items to mix');
     }
     else if(hasWater == true){
-      this.pickUpMessage('You have Water(H20)\nFind more items to mix');
+      PickUpMessage('You have Water(H20)\nFind more items to mix');
     }
     else if(hasHCI == true){
-      this.pickUpMessage('You have Hydrogen Chloride gas(HCI)\nFind more items to mix');
+      PickUpMessage('You have Hydrogen Chloride gas(HCI)\nFind more items to mix');
     }
     else{
-      this.pickUpMessage('You have nothing to mix\nFind items to mix');
+      PickUpMessage('You have nothing to mix\nFind items to mix');
     }
   }
   else{
@@ -282,7 +213,7 @@ mixHci: function(){
   if(hasHCI == true && hasWater == true && isAtMStation == true && mixHciKey.isDown == true){
     hasAcid = true;
     hasHCI = false;
-    this.pickUpMessage('\n\n\n\n\n\nYou have created Hydrochloric Acid (HCI)\ntry using this on the door! ');
+    PickUpMessage('\n\n\n\n\nYou have created Hydrochloric Acid (HCI)\ntry using this on the door! ');
   }
   else{
     // do not mix
@@ -303,7 +234,7 @@ mixFr: function(){
 // Display tips to user
 displayHelp: function(){
   // Help text for player
-  this.pickUpMessage('Press E to interact \nwith the mixing station\n you need a way through\nthe locked door!');
+  PickUpMessage('Press E to interact \nwith the mixing station\n you need a way through\nthe locked door!');
 }
 
 };
