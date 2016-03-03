@@ -101,8 +101,6 @@ var isOnPlatform;
 
 update: function(){
 
-    console.log(isOnPlatform);
-
      UpdateCollision(player, layer, diamonds, fires);
      // update player movement and check for actions
      updatePlayer();
@@ -120,6 +118,8 @@ update: function(){
     game.physics.arcade.overlap(player, mixingStations, this.mixingStationInteraction, null, this);
     // Player collects Mercury(II) thiocyanate
     game.physics.arcade.overlap(player, mercurys, this.collectItem, null, this);
+    //Check player is next to urn to fill with ash
+    game.physics.arcade.overlap(player, urns, this.fillUrn, null, this);
     // Player collects francium
     game.physics.arcade.overlap(player, franciums, this.collectItem, null, this);
 
@@ -177,6 +177,9 @@ update: function(){
      else if(hasWater == true && hasFrancium == true){
         PickUpMessage('You have Water (H2O), \n& Francium(Fr)\nPress F to mix ');
      }
+     else if(hasWater == true && hasMercury == true){
+        PickUpMessage('You have Water (H2O), \n& Mercury(II) thiocyanate (Hg(SCN)2)\nPress M to ignite\nMercury(II) thiocyanate (Hg(SCN)2)');
+     }
      else if(hasFrancium == true){
        PickUpMessage('You have Francium(Fr)\nFind more items to mix');
      }
@@ -233,12 +236,16 @@ update: function(){
 
 // fill urn to access platforms once ash has been gathered.
  fillUrn: function(){
+   if(hasAsh == true){
+     PickUpMessage('Press U to fill urn with ash');
+   }
+   else{
+     PickUpMessage('Find Ash to fill urn');
+   }
    if(hasAsh == true && fillKey.isDown == true){
      platformX = CreatePlatform(game.world.width - 441, game.world.height - 49);
-      game.add.tween(platformX.body).to({ y: '-700' }, 8000,Phaser.Easing.Linear.None).to({y:'+700'}, 2000,Phaser.Easing.Linear.None).yoyo().loop().start();
-    //  CreatePlatform(game.world.width - 541, game.world.height - 250);
-    //  CreatePlatform(game.world.width - 441, game.world.height - 350);
-    //  CreatePlatform(game.world.width - 441, game.world.height - 450);
+      game.add.tween(platformX.body).to({ y: '-700' }, 14000,Phaser.Easing.Linear.None).to({y:'+700'}, 2000,Phaser.Easing.Linear.None).yoyo().loop().start();
+
    }
  },
 
