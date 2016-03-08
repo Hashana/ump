@@ -26,7 +26,8 @@ var loadState = {
     game.load.spritesheet('dude', 'assets/images/dude.png', 32,48);
     game.load.spritesheet('door', 'assets/images/door.png', 63, 84);
     game.load.spritesheet('lockedDoor', 'assets/images/LockedDoor.png', 63, 84);
-    game.load.spritesheet('explosion', 'assets/images/explosion.png', 60,80);
+    //game.load.spritesheet('explosion', 'assets/images/explosion.png', 60,80);
+    game.load.spritesheet('explosion', 'assets/images/explode.png', 128, 128);
 
     // Load background music
     game.load.audio('music1', 'assets/sound/RetroBeat.ogg');

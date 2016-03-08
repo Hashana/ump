@@ -110,7 +110,7 @@ function movePlayer(ice){
   // Add explosion for death animation
   var explosion = this.game.add.sprite(player.body.x, player.body.y, 'explosion');
   explosion.anchor.setTo(0.5,0.5);
-  explosion.animations.add ('explode',[0,1,2,3], 10 ,true);
+  explosion.animations.add('explode' ,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], 10 ,true);
   explosion.animations.play("explode", 10, false);
   gameOverInstructions();
 
