@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv');
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameDiv');
 
 
 // Set up game states

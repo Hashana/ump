@@ -124,6 +124,12 @@ update: function(){
 
 },
 
+render: function(){
+  fires.forEachAlive(game.debug.body,game.debug,"#ff9090",false);
+  //game.debug.body(fires);
+},
+
+
    // Player opens door
    openDoor: function(){
      if(doorIsOpen == false)
