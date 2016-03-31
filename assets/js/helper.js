@@ -19,5 +19,5 @@ function EducationalInfo(information){
   var text1 = this.game.add.text(300 , 100 , information, info_style);
   text1.anchor.setTo(0.5, 0.5);
   text1.fixedToCamera = true;
-  infoTween = game.add.tween(text1).to({alpha: 0}, 5900, Phaser.Easing.Linear.None, true);
+  infoTween = game.add.tween(text1).to({alpha: 0}, 6900, Phaser.Easing.Linear.None, true);
 }

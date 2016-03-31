@@ -89,7 +89,8 @@ var isOnPlatform;
      hasFrancium = false;
 
      //Create urn
-     CreateUrn(4450, game.world.height - 90);
+    // CreateUrn(4450, game.world.height - 90);
+     CreateUrn(game.world.width - 2455, game.world.height - 334);
      hasAsh = false;
 
      // Add collectables - diamonds
@@ -125,8 +126,8 @@ update: function(){
 },
 
 render: function(){
-  fires.forEachAlive(game.debug.body,game.debug,"#ff9090",false);
-  //game.debug.body(fires);
+//  fires.forEachAlive(game.debug.body,game.debug,"#ffffff",false);
+//  game.debug.body(fires);
 },
 
 
@@ -159,15 +160,15 @@ render: function(){
    sounds.pickUpSfx.play();
    if(image.parent == franciums){
      hasFrancium = true;
-     PickUpMessage('          Francium');
+     PickUpMessage('          Francium(Fr)');
 
    }
    else if(image.parent == waterBottles){
-       PickUpMessage('          Water');
+       PickUpMessage('          Water(H20)');
        hasWater = true;
      }
      else if(image.parent == mercurys){
-         PickUpMessage('Mercury(II) thiocyanate');
+         PickUpMessage('Mercury(II) thiocyanate (Hg(SCN)2)');
          hasMercury = true;
        }
  },
@@ -192,7 +193,7 @@ render: function(){
        PickUpMessage('You have Water(H20)\nFind more items to mix');
      }
      else if(hasMercury == true){
-       PickUpMessage('You have Mercury(II) thiocyanate (Hg(SCN)2)\nPush M to ignite it');
+       PickUpMessage('You have Mercury(II) thiocyanate(Hg(SCN)2)\nPush M to ignite it');
      }
      else{
        PickUpMessage('You have nothing to mix\nFind items to mix');
@@ -219,7 +220,7 @@ render: function(){
  mixMercury: function(){
    if(hasMercury == true && isAtMStation == true && mixMKey.isDown == true){
      //input animation call here!
-     EducationalInfo('You begin see to smoke and its spewing\n out ash everwhere resembling a snake\n its called an intumescent reaction\nYPress G to gather the ash');
+     EducationalInfo('You begin see to smoke and its spewing\n out ash everwhere resembling a snake\n its called an Intumescent reaction\nPress G to gather the ash');
      hasMercury = false;
 
    }

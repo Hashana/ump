@@ -118,7 +118,7 @@ function movePlayer(ice){
 
   //Player dies to combustionDeath
   function combustionDeath(){
-    deathText('When your body touched the flame \n the potassium set on fire! \n You will continue to burn until you melt..');
+    deathText('When your body touched the flame \n the potassium set on fire! \n You will continue to burn until you melt..\nThis is an exothermic reaction!');
   explosion(player);
 
 }
@@ -148,7 +148,7 @@ function deathText(text){
   //Player dies to water
   function waterDeath(sprite){
   if(sprite == player){
-    deathText('When your body touched the water \n the potassium in your body reacted \n with the oxygen! \n You will continue to burn until you melt..');
+    deathText('When your body touched the water \n the potassium in your body reacted \n with the oxygen! \nPotassium Oxide is produced');
     explosion(player);
   }
   else {
