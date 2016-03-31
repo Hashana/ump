@@ -220,7 +220,7 @@ render: function(){
  mixMercury: function(){
    if(hasMercury == true && isAtMStation == true && mixMKey.isDown == true){
      //input animation call here!
-     EducationalInfo('You begin see to smoke and its spewing\n out ash everwhere resembling a snake\n its called an Intumescent reaction\nPress G to gather the ash');
+     EducationalInfo('You begin see to smoke and its spewing\n out ash everwhere resembling a snake\n its an exothermic reaction\nPress G to gather the ash');
      hasMercury = false;
 
    }
