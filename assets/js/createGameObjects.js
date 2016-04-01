@@ -50,12 +50,24 @@ function InitialiseGameObjects(){
   hcis.enableBody = true;
   platforms = game.add.group()
   platforms.enableBody = true;
+  beanstalks = game.add.group()
+  beanstalks.enableBody = true;
+  caesiums = game.add.group()
+  caesiums.enableBody = true;
   platforms.physicsBodyType = Phaser.Physics.ARCADE;
 
 }
 
 function CreateFrancium(width, height){
   var francium = franciums.create(width, height, 'francium');
+}
+
+function CreateCaesium(width, height){
+  var caesium = caesiums.create(width, height, 'caesium');
+}
+
+function CreateBeanstalk(width, height){
+  var beanstalk = beanstalks.create(width, height, 'beanstalk');
 }
 
 function CreatePlatform(width, height){

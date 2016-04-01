@@ -128,6 +128,7 @@ var level2State = {
         sounds.openDoorSfx.play();
         door.animations.play('open', 30, false);
         doorIsOpen = true;
+        score += 20;
       }
       else{
       //  this.displayHelp();
@@ -157,11 +158,11 @@ collectItem: function(player, image){
   sounds.pickUpSfx.play();
   if(image.parent == franciums){
     hasFrancium = true;
-    PickUpMessage('          Caesium');
+    PickUpMessage('          Francium (Fr)');
 
   }
   else if(image.parent == waterBottles){
-      PickUpMessage('          Water');
+      PickUpMessage('          Water(H20)');
       hasWater = true;
     }
     else if(image.parent == hcis){
@@ -175,19 +176,19 @@ mixingStationInteraction: function(){
   isAtMStation = true;
   if(interactKey.isDown){
     if(hasWater == true && hasFrancium == true && hasHCI == true){
-      PickUpMessage('You have Water (H2O),\nCaesium(Cs) and \nHydrogen Chloride gas(HCl)\nPress H to mix HCI & water\nor F to mix Cs & water');
+      PickUpMessage('You have Water (H2O),\nFrancium(Fr) and \nHydrogen Chloride gas(HCl)\nPress H to mix HCI & water\nor F to mix Fr & water');
     }
     else if(hasWater == true && hasFrancium == true){
-      PickUpMessage('You have Water (H2O) & Caesium(Cs)\nPress F to mix them');
+      PickUpMessage('You have Water (H2O) & Francium (Fr)\nPress F to mix them');
     }
     else if(hasWater == true && hasHCI == true){
       PickUpMessage('You have Water (H2O) & Hydrogen Chloride gas(HCl)\nPress H to mix them');
     }
     else if(hasFrancium == true && hasHCI == true){
-      PickUpMessage('You have Caesium(Cs) &\nHydrogen Chloride gas(HCl)\nFind more items to mix');
+      PickUpMessage('You have Francium (Fr) &\nHydrogen Chloride gas(HCl)\nFind more items to mix');
     }
     else if(hasFrancium == true){
-      PickUpMessage('You have Caesium(Cs))\nFind more items to mix');
+      PickUpMessage('You have Francium (Fr)\nFind more items to mix');
     }
     else if(hasWater == true){
       PickUpMessage('You have Water(H20)\nFind more items to mix');
@@ -214,6 +215,7 @@ mixHci: function(){
     hasAcid = true;
     hasHCI = false;
     PickUpMessage('\n\n\n\n\nYou have created Hydrochloric Acid (HCl)\ntry using this on the door! ');
+    score += 20;
   }
   else{
     // do not mix
@@ -222,7 +224,7 @@ mixHci: function(){
 
 mixFr: function(){
   if(hasFrancium == true && hasWater == true && isAtMStation == true && mixFrKey.isDown == true){
-    deathText('When you mixed the Cs with H20\nthere was a violent exothermic reaction\n\nYou have exploaded!');
+    deathText('When you mixed the Fr with H20\nthere was a violent exothermic reaction\n\nYou have exploaded!');
     explosion(player);
   }
   else{

@@ -21,6 +21,8 @@ var loadState = {
     game.load.image('hci', 'assets/images/labBottle.png');
     game.load.image('mercury', 'assets/images/mercuryTh.png');
     game.load.image('urn',  'assets/images/MarbleUrn.png');
+    game.load.image('beanstalk', 'assets/images/beanstalk1.png');
+    game.load.image('caesium', 'assets/images/caesium.png');
 
     //Load spritesheets
     game.load.spritesheet('dude', 'assets/images/dude.png', 32,48);

@@ -22,11 +22,12 @@ var bgSound;
 var sounds = {};
 var deathType;
 var sounds = {};
-var hasFrancium;
+var hasCaesium;
 var hasWater;
 var hasMercury;
 var hasAsh;
 var isOnPlatform;
+var platformCreated;
 
  var level1State = {
    create: function(){
@@ -34,6 +35,10 @@ var isOnPlatform;
      InitialiseGameObjects();
      // set score to 0
      score = 0;
+
+
+     platformCreated = false;
+
 
      //Add door for win condition
       CreateDoor(4791, 160, 'door');
@@ -62,8 +67,8 @@ var isOnPlatform;
     interactKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
     interactKey.onDown.add(this.mixingStationInteraction, this);
     //Add F Key for mixing Fr & Water
-    mixFrKey = game.input.keyboard.addKey(Phaser.Keyboard.F);
-    mixFrKey.onDown.add(this.mixFr, this);
+    mixCsKey = game.input.keyboard.addKey(Phaser.Keyboard.C);
+    mixCsKey.onDown.add(this.mixFr, this);
     // Add key to create
     mixMKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
     mixMKey.onDown.add(this.mixMercury, this);
@@ -84,13 +89,13 @@ var isOnPlatform;
      // Create Mercury image
      CreateMercury(350, game.world.height - 515);
      hasMercury = false;
-     // Add Francium (Red herring)
-     CreateFrancium(589, game.world.height - 78);
-     hasFrancium = false;
+     // Add caesium (Red herring)
+     CreateCaesium(589, game.world.height - 78);
+     hasCaesium = false;
 
      //Create urn
     // CreateUrn(4450, game.world.height - 90);
-     CreateUrn(game.world.width - 2455, game.world.height - 334);
+     CreateUrn(game.world.width - 1255, game.world.height - 334);
      hasAsh = false;
 
      // Add collectables - diamonds
@@ -112,7 +117,7 @@ update: function(){
      game.physics.arcade.collide(player, platforms);
      //Player goes through door.
      game.physics.arcade.overlap(player, door, this.completeLevel,null, this);
-     // //Player collects water
+     //Player collects water
      game.physics.arcade.overlap(player, waterBottles, this.collectItem, null, this);
      //Player is asked to interact with the mixing station
     game.physics.arcade.overlap(player, mixingStations, this.mixingStationInteraction, null, this);
@@ -121,7 +126,9 @@ update: function(){
     //Check player is next to urn to fill with ash
     game.physics.arcade.overlap(player, urns, this.fillUrn, null, this);
     // Player collects francium
-    game.physics.arcade.overlap(player, franciums, this.collectItem, null, this);
+    game.physics.arcade.overlap(player, caesiums, this.collectItem, null, this);
+    //Player collects water
+    game.physics.arcade.overlap(player, beanstalks, this.collectItem, null, this);
 
 },
 
@@ -158,9 +165,9 @@ render: function(){
  collectItem: function(player, image){
    image.kill();
    sounds.pickUpSfx.play();
-   if(image.parent == franciums){
-     hasFrancium = true;
-     PickUpMessage('          Francium(Fr)');
+   if(image.parent == caesiums){
+     hasCaesium = true;
+     PickUpMessage('          Caesium(Cs)');
 
    }
    else if(image.parent == waterBottles){
@@ -171,23 +178,27 @@ render: function(){
          PickUpMessage('Mercury(II) thiocyanate (Hg(SCN)2)');
          hasMercury = true;
        }
+       else if(image.parent == beanstalks){
+           PickUpMessage('Carbon Nitride(C3N4)');
+           hasAsh = true;
+         }
  },
 
 
  mixingStationInteraction: function(){
    isAtMStation = true;
    if(interactKey.isDown){
-     if(hasWater == true && hasFrancium == true && hasMercury == true){
-       PickUpMessage('You have Water (H2O), \nMercury(II) thiocyanate (Hg(SCN)2) \n& Francium(Fr)\nPress F to mix Francium \n& water Or press M to\nignite Mercury(II) thiocyanate (Hg(SCN)2)');
+     if(hasWater == true && hasCaesium == true && hasMercury == true){
+       PickUpMessage('You have Water (H2O), \nMercury(II) thiocyanate (Hg(SCN)2) \n& Caesium(Cs)\nPress C to mix Caesium(Cs) \n& water Or press M to\nignite Mercury(II) thiocyanate (Hg(SCN)2)');
      }
-     else if(hasWater == true && hasFrancium == true){
-        PickUpMessage('You have Water (H2O), \n& Francium(Fr)\nPress F to mix ');
+     else if(hasWater == true && hasCaesium == true){
+        PickUpMessage('You have Water (H2O), \n& Caesium(Cs)\nPress C to mix ');
      }
      else if(hasWater == true && hasMercury == true){
         PickUpMessage('You have Water (H2O), \n& Mercury(II) thiocyanate (Hg(SCN)2)\nPress M to ignite\nMercury(II) thiocyanate (Hg(SCN)2)');
      }
-     else if(hasFrancium == true){
-       PickUpMessage('You have Francium(Fr)\nFind more items to mix');
+     else if(hasCaesium == true){
+       PickUpMessage('You have Caesium(Cs)\nFind more items to mix');
      }
      else if(hasWater == true){
        PickUpMessage('You have Water(H20)\nFind more items to mix');
@@ -208,8 +219,8 @@ render: function(){
 
  //
  mixFr: function(){
-   if(hasFrancium == true && hasWater == true && isAtMStation == true && mixFrKey.isDown == true){
-     deathText('When you mixed the Fr with H20\nthere was a violent exothermic reaction\n\nYou have exploaded!');
+   if(hasCaesium == true && hasWater == true && isAtMStation == true && mixCsKey.isDown == true){
+     deathText('When you mixed the Caesium(Cs) \nwith Water(H20)there was a violent \nexothermic reaction\nYou have exploaded!');
      explosion(player);
    }
    else{
@@ -220,8 +231,12 @@ render: function(){
  mixMercury: function(){
    if(hasMercury == true && isAtMStation == true && mixMKey.isDown == true){
      //input animation call here!
-     EducationalInfo('You begin see to smoke and its spewing\n out ash everwhere resembling a snake\n its an exothermic reaction\nPress G to gather the ash');
+     EducationalInfo('\n\nMercury thiocyanate when lit \nhas an effect known as the Pharaohs serpent. \nA rapid exothermic reaction has started \nwhich produces Carbon Nitride (C3N4) \na mass of coiling serpent-like solid');
      hasMercury = false;
+     CreateBeanstalk(4408, game.world.height - 100);
+     score += 20;
+
+
 
    }
    else{
@@ -243,14 +258,16 @@ render: function(){
 // fill urn to access platforms once ash has been gathered.
  fillUrn: function(){
    if(hasAsh == true){
-     PickUpMessage('Press U to fill urn with ash');
+     PickUpMessage('Press U to fill urn with Carbon Nitride \n(C3N4)');
    }
    else{
-     PickUpMessage('Find Ash to fill urn');
+     PickUpMessage('Find Carbon Nitride (C3N4) to fill urn');
    }
-   if(hasAsh == true && fillKey.isDown == true){
+   if(hasAsh == true && fillKey.isDown == true && platformCreated == false){
      platformX = CreatePlatform(game.world.width - 441, game.world.height - 49);
       game.add.tween(platformX.body).to({ y: '-700' }, 14000,Phaser.Easing.Linear.None).to({y:'+700'}, 2000,Phaser.Easing.Linear.None).yoyo().loop().start();
+      platformCreated = true;
+      PickUpMessage('\n\n\n"Click" .. it worked!');
 
    }
  },
