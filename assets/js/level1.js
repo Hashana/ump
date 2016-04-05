@@ -174,15 +174,15 @@ render: function(){
 
    }
    else if(image.parent == waterBottles){
-       PickUpMessage('          Water(H20)');
+       PickUpMessage('          Water(H\u20820)');
        hasWater = true;
      }
      else if(image.parent == mercurys){
-         PickUpMessage('Mercury(II) thiocyanate (Hg(SCN)2)');
+         PickUpMessage('Mercury(II) thiocyanate (Hg(SCN)\u2082)');
          hasMercury = true;
        }
        else if(image.parent == beanstalks){
-           PickUpMessage('Carbon Nitride(C3N4)');
+           PickUpMessage('Carbon Nitride(C\u2083N\u2084)');
            hasAsh = true;
          }
  },
@@ -196,25 +196,25 @@ render: function(){
    isAtMStation = true;
    if(interactKey.isDown){
      if(hasWater == true && hasCaesium == true && hasMercury == true){
-       PickUpMessage('You have Water (H2O), \nMercury(II) thiocyanate (Hg(SCN)2) \n& Caesium(Cs)\nPress C to mix Caesium(Cs) & water \nOr press M to ignite the \nMercury(II) thiocyanate (Hg(SCN)2)');
+       PickUpMessage('You have Water (H\u2082O), \nMercury(II) thiocyanate (Hg(SCN)\u2082) \n& Caesium(Cs)\nPress C to mix Caesium(Cs) & water \nOr press M to ignite the \nMercury(II) thiocyanate (Hg(SCN)\u2082)');
      }
      else if(hasWater == true && hasCaesium == true){
-        PickUpMessage('You have Water (H2O), \n& Caesium(Cs)\nPress C to mix ');
+        PickUpMessage('You have Water (H\u2082O), \n& Caesium(Cs)\nPress C to mix ');
      }
      else if(hasWater == true && hasMercury == true){
-        PickUpMessage('You have Water (H2O), \n& Mercury(II) thiocyanate (Hg(SCN)2)\nPress M to ignite\nMercury(II) thiocyanate (Hg(SCN)2)');
+        PickUpMessage('You have Water (H\u2082O), \n& Mercury(II) thiocyanate (Hg(SCN)\u2082)\nPress M to ignite\nMercury(II) thiocyanate (Hg(SCN)\u2082)');
      }
      else if(hasMercury == true && hasCaesium == true){
-       PickUpMessage('You have Caesium(Cs), \n& Mercury(II) thiocyanate (Hg(SCN)2)\nPress M to ignite\nMercury(II) thiocyanate (Hg(SCN)2)');
+       PickUpMessage('You have Caesium(Cs), \n& Mercury(II) thiocyanate (Hg(SCN)\u2082)\nPress M to ignite\nMercury(II) thiocyanate (Hg(SCN)\u2082)');
      }
      else if(hasCaesium == true){
        PickUpMessage('You have Caesium(Cs)\nFind more items to mix');
      }
      else if(hasWater == true){
-       PickUpMessage('You have Water(H20)\nFind more items to mix');
+       PickUpMessage('You have Water(H\u20820)\nFind more items to mix');
      }
      else if(hasMercury == true){
-       PickUpMessage('You have Mercury(II) thiocyanate\n(Hg(SCN)2). Push M to ignite it');
+       PickUpMessage('You have Mercury(II) thiocyanate\n(Hg(SCN)\u2082). Push M to ignite it');
      }
      else{
        PickUpMessage('You have nothing to mix\nFind items to mix');
@@ -230,7 +230,7 @@ render: function(){
  //
  mixFr: function(){
    if(hasCaesium == true && hasWater == true && isAtMStation == true && mixCsKey.isDown == true){
-     deathText('When you mixed the Caesium(Cs) \nwith Water(H20)there was a violent \nexothermic reaction\nYou have exploaded!');
+     deathText('When you mixed the Caesium(Cs) \nwith Water(H\u20820)there was a violent \nexothermic reaction\nYou have exploaded!');
      explosion(player);
    }
    else{
@@ -241,7 +241,7 @@ render: function(){
  mixMercury: function(){
    if(hasMercury == true && isAtMStation == true && mixMKey.isDown == true){
      //input animation call here!
-     EducationalInfo('\n\n\n\nMercury thiocyanate when lit \nhas an effect known as the Pharaohs serpent. \nA rapid exothermic reaction has started \nwhich produces Carbon Nitride (C3N4) \na mass of coiling serpent-like solid');
+     EducationalInfo('\n\n\n\nMercury thiocyanate when lit \nhas an effect known as the Pharaohs serpent. \nA rapid exothermic reaction has started \nwhich produces Carbon Nitride (C\u2083N\u2084) \na mass of coiling serpent-like solid');
      hasMercury = false;
      CreateBeanstalk(4408, game.world.height - 100);
      score += 20;
@@ -269,11 +269,11 @@ render: function(){
  fillUrn: function(){
    if(hasAsh == true ){
      if( platformCreated == false){
-       PickUpMessage('Press U to fill with Carbon Nitride \n           (C3N4)');
+       PickUpMessage('Press U to fill with Carbon Nitride \n           (C\u2083N\u2084)');
      }
    }
    else{
-     PickUpMessage('Fill with Carbon Nitride (C3N4)');
+     PickUpMessage('Fill with Carbon Nitride (C\u2083N\u2084)');
    }
    if(hasAsh == true && fillKey.isDown == true && platformCreated == false){
      platformX = CreatePlatform(game.world.width - 441, game.world.height - 49);

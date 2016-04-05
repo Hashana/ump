@@ -44,7 +44,7 @@ var level2State = {
 
     setUpPlayer(50, game.world.height - 98);
 
-    helpText = 'Press E to interact \nwith the mixing station\n you need a way through\nthe locked door!';
+    helpText = 'Press I to interact \nwith the mixing station\n you need a way through\nthe locked door!';
     this.displayHelp();
 
     // Add score text
@@ -164,7 +164,7 @@ collectItem: function(player, image){
 
   }
   else if(image.parent == waterBottles){
-      PickUpMessage('          Water(H20)');
+      PickUpMessage('          Water(H\u20820)');
       hasWater = true;
     }
     else if(image.parent == hcis){
@@ -178,13 +178,13 @@ mixingStationInteraction: function(){
   isAtMStation = true;
   if(interactKey.isDown){
     if(hasWater == true && hasFrancium == true && hasHCI == true){
-      PickUpMessage('You have Water (H2O),\nFrancium(Fr) and \nHydrogen Chloride gas(HCl)\nPress H to mix HCI & water\nor F to mix Fr & water');
+      PickUpMessage('You have Water (H\u2082O),\nFrancium(Fr) and \nHydrogen Chloride gas(HCl)\nPress H to mix HCI & water\nor F to mix Fr & water');
     }
     else if(hasWater == true && hasFrancium == true){
-      PickUpMessage('You have Water (H2O) & Francium (Fr)\nPress F to mix them');
+      PickUpMessage('You have Water (H\u2082O) & Francium (Fr)\nPress F to mix them');
     }
     else if(hasWater == true && hasHCI == true){
-      PickUpMessage('You have Water (H2O) & Hydrogen Chloride gas(HCl)\nPress H to mix them');
+      PickUpMessage('You have Water (H\u2082O) & Hydrogen Chloride gas(HCl)\nPress H to mix them');
     }
     else if(hasFrancium == true && hasHCI == true){
       PickUpMessage('You have Francium (Fr) &\nHydrogen Chloride gas(HCl)\nFind more items to mix');
@@ -193,7 +193,7 @@ mixingStationInteraction: function(){
       PickUpMessage('You have Francium (Fr)\nFind more items to mix');
     }
     else if(hasWater == true){
-      PickUpMessage('You have Water(H20)\nFind more items to mix');
+      PickUpMessage('You have Water(H\u20820)\nFind more items to mix');
     }
     else if(hasHCI == true){
       PickUpMessage('You have Hydrogen Chloride gas(HCl)\nFind more items to mix');
