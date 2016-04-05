@@ -36,7 +36,7 @@ start: function() {
 },
 // Skip intro and start game
 skipTutorial: function() {
-    this.game.state.start('level2');
+    this.game.state.start('level1');
 },
 
 // Start the 'developer trial level'

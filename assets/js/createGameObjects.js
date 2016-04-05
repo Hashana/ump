@@ -54,6 +54,8 @@ function InitialiseGameObjects(){
   beanstalks.enableBody = true;
   caesiums = game.add.group()
   caesiums.enableBody = true;
+  keys = game.add.group()
+  keys.enableBody = true;
   platforms.physicsBodyType = Phaser.Physics.ARCADE;
 
 }
@@ -68,6 +70,10 @@ function CreateCaesium(width, height){
 
 function CreateBeanstalk(width, height){
   var beanstalk = beanstalks.create(width, height, 'beanstalk');
+}
+
+function CreateKey(width, height){
+  var key = keys.create(width, height, 'key');
 }
 
 function CreatePlatform(width, height){

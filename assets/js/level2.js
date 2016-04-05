@@ -61,7 +61,7 @@ var level2State = {
     HelpKeyQ = game.input.keyboard.addKey(Phaser.Keyboard.Q);
     HelpKeyQ.onDown.add(this.displayHelp, this);
     // Add E Key for Interactions
-    interactKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
+    interactKey = game.input.keyboard.addKey(Phaser.Keyboard.I);
     interactKey.onDown.add(this.useMixingStation, this);
     // Add H Key for mixing HCI acid & Water
     mixHciKey = game.input.keyboard.addKey(Phaser.Keyboard.H);

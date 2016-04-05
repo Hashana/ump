@@ -23,6 +23,7 @@ var loadState = {
     game.load.image('urn',  'assets/images/MarbleUrn.png');
     game.load.image('beanstalk', 'assets/images/beanstalk1.png');
     game.load.image('caesium', 'assets/images/caesium.png');
+    game.load.image('key', 'assets/images/key.png')
 
     //Load spritesheets
     game.load.spritesheet('dude', 'assets/images/dude.png', 32,48);
@@ -35,6 +36,7 @@ var loadState = {
     game.load.audio('music1', 'assets/sound/RetroPolka.ogg');
     game.load.audio('music2', 'assets/sound/RetroComedy.ogg');
     game.load.audio('music3', 'assets/sound/RetroReggae.ogg');
+    game.load.audio('storyMusic', 'assets/sound/MissionPlausible.ogg');
 
 
     //Load sounds
