@@ -32,8 +32,10 @@ var loadState = {
     game.load.spritesheet('explosion', 'assets/images/explode.png', 128, 128);
 
     // Load background music
-    game.load.audio('music1', 'assets/sound/RetroBeat.ogg');
+    game.load.audio('music1', 'assets/sound/RetroPolka.ogg');
     game.load.audio('music2', 'assets/sound/RetroComedy.ogg');
+    game.load.audio('music3', 'assets/sound/RetroReggae.ogg');
+
 
     //Load sounds
     game.load.audio('explosion', 'assets/sound/explosion.mp3');

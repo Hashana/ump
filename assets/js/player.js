@@ -129,7 +129,7 @@ function deathText(text){
   var deathInfoText_style = { font: 'bold 32px Acme', fill: '#f00'};
   var deathText = game.add.text(200, 200, deathInfo, deathInfoText_style);
   deathText.fixedToCamera = true;
-  game.add.tween(deathText).to({alpha: 0}, 10500, Phaser.Easing.Linear.None, true);
+  game.add.tween(deathText).to({alpha: 0}, 20500, Phaser.Easing.Linear.None, true);
 }
 
 

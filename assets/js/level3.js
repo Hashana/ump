@@ -26,7 +26,7 @@ var level3State = {
     cursors = game.input.keyboard.createCursorKeys();
 
     // Background sound  on a loop
-    bgSound = SetUpMusic('music1');
+    bgSound = SetUpMusic('music3');
     // Add sound effects
     SetUpSounds();
 

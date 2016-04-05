@@ -29,7 +29,7 @@ function CreateFires(numberOfFires){
    //Add gravity
    fire.body.gravity.y = 400;
    //Give fires a bounce value
-   fire.body.bounce.y = 0.7;
+   fire.body.bounce.y = 0.2;
    fire.body.setSize(25, 38, 5, 30);
   }
 
