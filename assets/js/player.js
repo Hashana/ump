@@ -148,7 +148,7 @@ function deathText(text){
   //Player dies to water
   function waterDeath(sprite){
   if(sprite == player){
-    deathText('When your body touched the water \n the potassium in your body reacted \n with the oxygen! \nPotassium Oxide is produced');
+    deathText('When your potassium body touched the \nwater it reacts violently. The Hydrogen (H) \nin the water ignites instantly! You explode \ncreating Potassium Hydroxide + Hydrogen ');
     explosion(player);
   }
   else {
