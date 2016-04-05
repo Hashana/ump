@@ -47,6 +47,8 @@ var platformCreated;
 
       //Add player
       setUpPlayer(50, game.world.height - 98);
+
+      helpText = '\nYou need a way to reach the door!';
       this.displayHelp();
 
      // Add score text
@@ -64,8 +66,8 @@ var platformCreated;
      HelpKeyQ = game.input.keyboard.addKey(Phaser.Keyboard.Q);
      HelpKeyQ.onDown.add(this.displayHelp, this);
      // Add E Key for Interactions
-    interactKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
-    interactKey.onDown.add(this.mixingStationInteraction, this);
+    interactKey = game.input.keyboard.addKey(Phaser.Keyboard.I);
+    interactKey.onDown.add(this.useMixingStation, this);
     //Add F Key for mixing Fr & Water
     mixCsKey = game.input.keyboard.addKey(Phaser.Keyboard.C);
     mixCsKey.onDown.add(this.mixFr, this);
@@ -82,6 +84,7 @@ var platformCreated;
      // Add educational elements to level
      //Add Mixing Station
      CreateMixingStation(4508, game.world.height - 100);
+     isAtMStation = false;
      // Add Water
      CreateWater(game.world.width - 1813, game.world.height - 245);
     // CreateWater(147,game.world.height - 687);
@@ -184,18 +187,25 @@ render: function(){
          }
  },
 
+ useMixingStation: function(){
+
+ },
+
 
  mixingStationInteraction: function(){
    isAtMStation = true;
    if(interactKey.isDown){
      if(hasWater == true && hasCaesium == true && hasMercury == true){
-       PickUpMessage('You have Water (H2O), \nMercury(II) thiocyanate (Hg(SCN)2) \n& Caesium(Cs)\nPress C to mix Caesium(Cs) \n& water Or press M to\nignite Mercury(II) thiocyanate (Hg(SCN)2)');
+       PickUpMessage('You have Water (H2O), \nMercury(II) thiocyanate (Hg(SCN)2) \n& Caesium(Cs)\nPress C to mix Caesium(Cs) & water \nOr press M to ignite the \nMercury(II) thiocyanate (Hg(SCN)2)');
      }
      else if(hasWater == true && hasCaesium == true){
         PickUpMessage('You have Water (H2O), \n& Caesium(Cs)\nPress C to mix ');
      }
      else if(hasWater == true && hasMercury == true){
         PickUpMessage('You have Water (H2O), \n& Mercury(II) thiocyanate (Hg(SCN)2)\nPress M to ignite\nMercury(II) thiocyanate (Hg(SCN)2)');
+     }
+     else if(hasMercury == true && hasCaesium == true){
+       PickUpMessage('You have Caesium(Cs), \n& Mercury(II) thiocyanate (Hg(SCN)2)\nPress M to ignite\nMercury(II) thiocyanate (Hg(SCN)2)');
      }
      else if(hasCaesium == true){
        PickUpMessage('You have Caesium(Cs)\nFind more items to mix');
@@ -204,7 +214,7 @@ render: function(){
        PickUpMessage('You have Water(H20)\nFind more items to mix');
      }
      else if(hasMercury == true){
-       PickUpMessage('You have Mercury(II) thiocyanate(Hg(SCN)2)\nPush M to ignite it');
+       PickUpMessage('You have Mercury(II) thiocyanate\n(Hg(SCN)2). Push M to ignite it');
      }
      else{
        PickUpMessage('You have nothing to mix\nFind items to mix');
@@ -231,7 +241,7 @@ render: function(){
  mixMercury: function(){
    if(hasMercury == true && isAtMStation == true && mixMKey.isDown == true){
      //input animation call here!
-     EducationalInfo('\n\nMercury thiocyanate when lit \nhas an effect known as the Pharaohs serpent. \nA rapid exothermic reaction has started \nwhich produces Carbon Nitride (C3N4) \na mass of coiling serpent-like solid');
+     EducationalInfo('\n\n\n\nMercury thiocyanate when lit \nhas an effect known as the Pharaohs serpent. \nA rapid exothermic reaction has started \nwhich produces Carbon Nitride (C3N4) \na mass of coiling serpent-like solid');
      hasMercury = false;
      CreateBeanstalk(4408, game.world.height - 100);
      score += 20;
@@ -257,17 +267,21 @@ render: function(){
 
 // fill urn to access platforms once ash has been gathered.
  fillUrn: function(){
-   if(hasAsh == true){
-     PickUpMessage('Press U to fill urn with Carbon Nitride \n(C3N4)');
+   if(hasAsh == true ){
+     if( platformCreated == false){
+       PickUpMessage('Press U to fill with Carbon Nitride \n           (C3N4)');
+     }
    }
    else{
-     PickUpMessage('Find Carbon Nitride (C3N4) to fill urn');
+     PickUpMessage('Fill with Carbon Nitride (C3N4)');
    }
    if(hasAsh == true && fillKey.isDown == true && platformCreated == false){
      platformX = CreatePlatform(game.world.width - 441, game.world.height - 49);
       game.add.tween(platformX.body).to({ y: '-700' }, 14000,Phaser.Easing.Linear.None).to({y:'+700'}, 2000,Phaser.Easing.Linear.None).yoyo().loop().start();
       platformCreated = true;
       PickUpMessage('\n\n\n"Click" .. it worked!');
+      helpText = '\n\n\n\n\n\nMaybe you can reach the door now?';
+      this.displayHelp();
 
    }
  },
@@ -275,7 +289,7 @@ render: function(){
  // Display tips to user
  displayHelp: function(){
    // Help text for player
-   PickUpMessage('Press E to interact \nwith the mixing station\n you need a way to\nreach the door!');
+   PickUpMessage(helpText);
  }
 
  };

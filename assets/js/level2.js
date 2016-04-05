@@ -30,6 +30,7 @@ var mixHciKey;
 var hasAcid;
 var isAtMStation;
 var mixFrKey;
+var helpText;
 
 var level2State = {
   create: function(){
@@ -43,6 +44,7 @@ var level2State = {
 
     setUpPlayer(50, game.world.height - 98);
 
+    helpText = 'Press E to interact \nwith the mixing station\n you need a way through\nthe locked door!';
     this.displayHelp();
 
     // Add score text
@@ -214,7 +216,8 @@ mixHci: function(){
   if(hasHCI == true && hasWater == true && isAtMStation == true && mixHciKey.isDown == true){
     hasAcid = true;
     hasHCI = false;
-    PickUpMessage('\n\n\n\n\nYou have created Hydrochloric Acid (HCl)\ntry using this on the door! ');
+    PickUpMessage('\n\n\n\n\nYou have created Hydrochloric Acid (HCl)\n   try using this on the door! ');
+    helpText = 'Try using the Hydrochloric Acid \n      on the lock!';
     score += 20;
   }
   else{
@@ -236,7 +239,9 @@ mixFr: function(){
 // Display tips to user
 displayHelp: function(){
   // Help text for player
-  PickUpMessage('Press E to interact \nwith the mixing station\n you need a way through\nthe locked door!');
+  PickUpMessage(helpText);
+
+  //PickUpMessage('Press E to interact \nwith the mixing station\n you need a way through\nthe locked door!');
 }
 
 };
