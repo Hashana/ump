@@ -90,6 +90,9 @@ openDoor: function(){
       door.animations.play('open', 30, false);
       doorIsOpen = true;
   }
+  else if (doorIsOpen == false && hasKey == false){
+    PickUpMessage('Find the key to unlock the door');
+  }
   else{
     // door is open
   }

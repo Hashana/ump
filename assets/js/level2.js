@@ -123,7 +123,7 @@ var level2State = {
   openDoor: function(){
     if(doorIsOpen == false && hasAcid == true)
     {
-      PickUpMessage('Press E to use the Hydrochloric Acid');
+      PickUpMessage('Press I to use the Hydrochloric Acid');
       if(interactKey.isDown)
       {
         PickUpMessage('\n\nThe Hydrochloric Acid has corroded \nthrough the lock!');

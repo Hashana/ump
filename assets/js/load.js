@@ -36,7 +36,7 @@ var loadState = {
     game.load.audio('music1', 'assets/sound/RetroPolka.ogg');
     game.load.audio('music2', 'assets/sound/RetroComedy.ogg');
     game.load.audio('music3', 'assets/sound/RetroReggae.ogg');
-    game.load.audio('storyMusic', 'assets/sound/MissionPlausible.ogg');
+    game.load.audio('storyMusic', 'assets/sound/SadDescent.ogg');
 
 
     //Load sounds
